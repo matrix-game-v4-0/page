@@ -1,10 +1,20 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Matrix-Game 4.0</title>
 <meta name="description" content="Matrix-Game 4.0: code builds the game, a VLM handles what rules cannot, and a few-step causal video model renders the world in real time.">
+<script>
+// 先定语言再渲染，避免中英文闪一下：链接里的 ?lang=zh / ?lang=en 优先，其次是记住的选择，最后看浏览器语言
+(function () {
+  var l = new URLSearchParams(location.search).get('lang');
+  if (l !== 'zh' && l !== 'en') { try { l = localStorage.getItem('mg4-lang'); } catch (e) {} }
+  if (l !== 'zh' && l !== 'en') l = /^zh/i.test(navigator.language || '') ? 'zh' : 'en';
+  document.documentElement.dataset.lang = l;
+  document.documentElement.lang = l === 'zh' ? 'zh-CN' : 'en';
+})();
+</script>
 <style>
   :root {
     --ink: #33383D; --sub: #7D848A; --hair: #E3E6E9; --panel: #F7F8F9; --bg: #FFFFFF;
@@ -21,10 +31,14 @@
   a { color: var(--slate); }
   .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
 
+  /* 中英文：每段文案写成 lang="en" 与 lang="zh" 两个 span，只显示当前语言那个 */
+  html[data-lang="en"] body [lang="zh"], html[data-lang="zh"] body [lang="en"] { display: none !important; }
+
   /* 导航 */
   nav { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,.88); backdrop-filter: blur(8px); border-bottom: 1px solid var(--hair); }
   nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; }
-  nav .brand { font-weight: 700; letter-spacing: .2px; }
+  nav .brand { font-weight: 700; letter-spacing: .2px; white-space: nowrap; }
+  nav .right { display: flex; align-items: center; gap: 22px; }
   nav .links a { margin-left: 22px; color: var(--sub); text-decoration: none; font-size: 14px; }
   nav .links a:hover { color: var(--ink); }
 
@@ -41,17 +55,28 @@
   .btn.soon { background: #fff; color: var(--sub); border-color: var(--hair); cursor: default; }
   .btn .tag { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--sand); }
 
-  /* 对比滑条 */
-  .compare { position: relative; margin: 40px auto 0; max-width: 960px; aspect-ratio: 864 / 480; border-radius: var(--radius); overflow: hidden; box-shadow: 0 18px 50px rgba(51,56,61,.14); user-select: none; touch-action: none; cursor: ew-resize; }
-  .compare img, .compare canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
-  .compare canvas { display: none; }
-  .compare video { display: none; }
-  .compare .top { clip-path: inset(0 calc(100% - var(--pos, 50%)) 0 0); }
-  .compare .bar { position: absolute; top: 0; bottom: 0; left: var(--pos, 50%); width: 2px; background: #fff; transform: translateX(-1px); }
-  .compare .knob { position: absolute; top: 50%; left: var(--pos, 50%); width: 40px; height: 40px; border-radius: 50%; background: #fff; transform: translate(-50%, -50%); box-shadow: 0 4px 14px rgba(0,0,0,.25); display: grid; place-items: center; color: var(--slate); font-weight: 700; font-size: 14px; }
-  .compare .lab { position: absolute; top: 14px; padding: 5px 10px; border-radius: 8px; font-size: 12px; font-weight: 700; color: #fff; background: rgba(51,56,61,.62); }
-  .compare .lab.l { left: 14px; } .compare .lab.r { right: 14px; }
+  /* 顶部总视频：整幅显示不裁切，默认静音自动播放，可开声音 */
+  .teaser { position: relative; margin: 40px auto 0; aspect-ratio: 16 / 9; border-radius: var(--radius); overflow: hidden; background: #000; box-shadow: 0 18px 50px rgba(51,56,61,.14); }
+  .teaser video { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .sound { position: absolute; top: 14px; left: 14px; display: inline-flex; align-items: center; gap: 7px; padding: 7px 12px; border: 0; border-radius: 999px; background: rgba(51,56,61,.72); color: #fff; font: 600 13px var(--font); cursor: pointer; }
+  .sound svg { width: 16px; height: 16px; }
+  .sound.off { display: none; }
   .cap { text-align: center; font-size: 13px; color: var(--sub); margin-top: 12px; }
+
+  /* 对比滑条：一条视频左半是生成画面、右半是引擎低模，画布按分割线各取一半 */
+  .compare { position: relative; aspect-ratio: 864 / 480; border-radius: 10px; overflow: hidden; background: #1F2327; box-shadow: 0 8px 24px rgba(51,56,61,.12); user-select: none; -webkit-user-select: none; touch-action: pan-y; cursor: ew-resize; }
+  .compare img, .compare canvas, .compare video { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
+  .compare video, .compare canvas { opacity: 0; }
+  .compare.live canvas { opacity: 1; }
+  .compare .bar { position: absolute; top: 0; bottom: 0; left: var(--pos, 50%); width: 2px; background: #fff; transform: translateX(-1px); }
+  .compare .knob { position: absolute; top: 50%; left: var(--pos, 50%); width: 30px; height: 30px; border-radius: 50%; background: #fff; transform: translate(-50%, -50%); box-shadow: 0 3px 10px rgba(0,0,0,.25); display: grid; place-items: center; color: var(--slate); font-weight: 700; font-size: 12px; }
+  .compare .lab { position: absolute; top: 8px; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; color: #fff; background: rgba(51,56,61,.62); white-space: nowrap; }
+  .compare .lab.l { left: 8px; } .compare .lab.r { right: 8px; }
+
+  /* 十六例网格 */
+  .gal { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px 14px; margin-top: 24px; }
+  .tile { margin: 0; }
+  .tile figcaption { font-size: 13px; font-weight: 600; color: var(--ink); margin-top: 8px; }
 
   /* 数字 */
   .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 44px auto 0; max-width: 960px; }
@@ -75,7 +100,7 @@
   .tabs { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 24px 0 14px; }
   .tab { border: 1px solid var(--hair); background: #fff; color: var(--sub); padding: 8px 14px; border-radius: 999px; font: 600 14px var(--font); cursor: pointer; transition: all .2s; }
   .tab.on { background: var(--slate); color: #fff; border-color: var(--slate); }
-  .lang { margin-left: auto; display: flex; border: 1px solid var(--hair); border-radius: 999px; overflow: hidden; }
+  .lang { display: flex; flex: 0 0 auto; border: 1px solid var(--hair); border-radius: 999px; overflow: hidden; }
   .lang button { border: 0; background: #fff; color: var(--sub); padding: 7px 12px; font: 600 13px var(--font); cursor: pointer; }
   .lang button.on { background: var(--mauve-l); color: var(--mauve); }
   .figbox { background: #fff; border: 1px solid var(--hair); border-radius: var(--radius); padding: 14px; }
@@ -98,9 +123,8 @@
   .video { position: relative; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--hair); background: #000; }
   .video video { width: 100%; display: block; }
   .vlabels { display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; font-size: 13px; font-weight: 700; color: var(--sub); margin: 18px 0 8px; }
-  .vlabels span:nth-child(1) { color: var(--sage); } .vlabels span:nth-child(2) { color: var(--slate); } .vlabels span:nth-child(3) { color: var(--sub); }
-  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 22px; }
-  .ph { aspect-ratio: 16 / 9; border-radius: var(--radius); border: 1px dashed #C9CDD1; display: grid; place-items: center; color: var(--sub); font-size: 13px; font-weight: 600;
+  .vlabels > span:nth-child(1) { color: var(--sage); } .vlabels > span:nth-child(2) { color: var(--slate); } .vlabels > span:nth-child(3) { color: var(--sub); }
+  .ph { margin-top: 22px; padding: 22px; border-radius: var(--radius); border: 1px dashed #C9CDD1; display: grid; place-items: center; color: var(--sub); font-size: 13px; font-weight: 600;
         background: linear-gradient(100deg, #F4F5F7 30%, #FAFAFB 50%, #F4F5F7 70%); background-size: 220% 100%; animation: shimmer 2.6s ease-in-out infinite; }
   @keyframes shimmer { 0% { background-position: 120% 0; } 100% { background-position: -120% 0; } }
 
@@ -117,10 +141,20 @@
   .lightbox.on { display: block; }
   .lightbox img { display: block; width: min(1800px, 96vw); margin: 2vw auto; }
 
+  @media (max-width: 900px) {
+    .gal { grid-template-columns: repeat(2, 1fr); }
+  }
   @media (max-width: 760px) {
-    .stats, .grid3 { grid-template-columns: repeat(2, 1fr); }
+    .stats { grid-template-columns: repeat(2, 1fr); }
     nav .links a { margin-left: 14px; }
-    .lang { margin-left: 0; }
+  }
+  @media (max-width: 640px) {
+    nav .links { display: none; }
+  }
+  @media (max-width: 560px) {
+    .wrap { padding: 0 16px; }
+    .gal { grid-template-columns: 1fr; }
+    .compare .knob { width: 36px; height: 36px; font-size: 14px; }
   }
   @media (prefers-reduced-motion: reduce) {
     * { animation: none !important; transition: none !important; }
@@ -132,91 +166,91 @@
 
 <nav><div class="wrap">
   <span class="brand">Matrix-Game 4.0</span>
-  <span class="links"><a href="#overview">Overview</a><a href="#method">Method</a><a href="#results">Results</a><a href="#bibtex">BibTeX</a></span>
+  <div class="right">
+    <span class="links"><a href="#overview"><span lang="en">Overview</span><span lang="zh">概览</span></a><a href="#method"><span lang="en">Method</span><span lang="zh">方法</span></a><a href="#results"><span lang="en">Results</span><span lang="zh">结果</span></a><a href="#gallery"><span lang="en">Gallery</span><span lang="zh">示例</span></a><a href="#bibtex"><span lang="en">BibTeX</span><span lang="zh">引用</span></a></span>
+    <div class="lang" id="langsw"><button data-lang="zh">中文</button><button data-lang="en">English</button></div>
+  </div>
 </div></nav>
 
 <header class="hero"><div class="wrap">
-  <span class="eyebrow">Project page · preview</span>
-  <h1>Code builds the game, <span class="grad">AI renders the world</span> in real time</h1>
-  <p class="lead">A game engine keeps the world state and draws a cheap low-poly proxy. A VLM decides whatever the rules cannot. A few-step causal video model turns every chunk into a finished frame on a single consumer GPU.</p>
-  <div class="authors">Authors to be announced</div>
+  <span class="eyebrow"><span lang="en">Project page · preview</span><span lang="zh">项目主页 · 预览版</span></span>
+  <h1><span lang="en">Code builds the game, <span class="grad">AI renders the world</span> in real time</span><span lang="zh">代码搭建游戏，<span class="grad">AI 实时渲染世界</span></span></h1>
+  <p class="lead"><span lang="en">A game engine keeps the world state and draws a cheap low-poly proxy. A VLM decides whatever the rules cannot. A few-step causal video model turns every chunk into a finished frame on a single consumer GPU.</span><span lang="zh">游戏引擎维护世界状态，画出一份廉价的低模代理画面。规则决定不了的事交给 VLM。少步数的因果视频模型在一张消费级显卡上，把每个块渲染成成品画面。</span></p>
+  <div class="authors"><span lang="en">Authors to be announced</span><span lang="zh">作者名单稍后公布</span></div>
   <div class="btns">
-    <span class="btn soon">Paper <span class="tag">soon</span></span>
-    <span class="btn soon">Code <span class="tag">soon</span></span>
-    <span class="btn soon">Playable demo <span class="tag">soon</span></span>
+    <span class="btn soon"><span lang="en">Paper</span><span lang="zh">论文</span> <span class="tag"><span lang="en">soon</span><span lang="zh">即将发布</span></span></span>
+    <span class="btn soon"><span lang="en">Code</span><span lang="zh">代码</span> <span class="tag"><span lang="en">soon</span><span lang="zh">即将发布</span></span></span>
+    <span class="btn soon"><span lang="en">Playable demo</span><span lang="zh">可玩演示</span> <span class="tag"><span lang="en">soon</span><span lang="zh">即将发布</span></span></span>
   </div>
 
-  <div class="compare reveal" id="cmp" style="--pos:50%">
-    <img src="assets/frames/hero_gen.jpg" alt="Frame generated by our model">
-    <img class="top" src="assets/frames/hero_lowpoly.jpg" alt="Low-poly proxy rendered by the game engine">
-    <canvas id="cmpc" width="864" height="480"></canvas>
-    <video id="pairv" src="assets/video/hero_pair.mp4" muted loop playsinline autoplay preload="auto"></video>
-    <div class="bar"></div><div class="knob">⇆</div>
-    <span class="lab l">Engine low-poly proxy</span><span class="lab r">Ours, rendered</span>
+  <div class="teaser reveal">
+    <video id="teaser" controls autoplay muted loop playsinline preload="auto"></video>
+    <button class="sound" id="snd" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg><span lang="en">Sound on</span><span lang="zh">打开声音</span></button>
   </div>
-  <div class="cap">Drag to compare. A real held-out evaluation clip; the left side is all the engine draws.</div>
+  <div class="cap"><span lang="en">Overview video. It starts muted; use the button or the player controls to turn the sound on.</span><span lang="zh">总视频，默认静音播放，点左上角按钮或播放器控件即可打开声音。</span></div>
 
   <div class="stats">
-    <div class="stat reveal"><div><span class="num" data-to="83">0</span><span class="unit">FPS</span></div><div class="desc">1-step generation, RTX 5090</div></div>
-    <div class="stat reveal"><div><span class="num" data-to="80">0</span><span class="unit">ms</span></div><div class="desc">key press to first reacting frame</div></div>
-    <div class="stat reveal"><div><span class="num" data-to="480">0</span><span class="unit">p</span></div><div class="desc">streaming output</div></div>
-    <div class="stat reveal"><div><span class="num" data-to="1">0</span><span class="unit">GPU</span></div><div class="desc">text encoder, DiT and VAE resident</div></div>
+    <div class="stat reveal"><div><span class="num" data-to="83">0</span><span class="unit">FPS</span></div><div class="desc"><span lang="en">1-step generation, RTX 5090</span><span lang="zh">单步生成，RTX 5090</span></div></div>
+    <div class="stat reveal"><div><span class="num" data-to="80">0</span><span class="unit">ms</span></div><div class="desc"><span lang="en">key press to first reacting frame</span><span lang="zh">从按键到第一帧响应</span></div></div>
+    <div class="stat reveal"><div><span class="num" data-to="480">0</span><span class="unit">p</span></div><div class="desc"><span lang="en">streaming output</span><span lang="zh">流式输出</span></div></div>
+    <div class="stat reveal"><div><span class="num" data-to="1">0</span><span class="unit">GPU</span></div><div class="desc"><span lang="en">text encoder, DiT and VAE resident</span><span lang="zh">文本编码器、DiT 与 VAE 同驻一张卡</span></div></div>
   </div>
 </div></header>
 
 <section id="overview"><div class="wrap reveal">
-  <h2><span class="k">OVERVIEW</span>A harness around the video model</h2>
-  <p class="body">Interactive world models that only roll out pixels keep the world state implicit: once something leaves the view it is gone, and game rules have to be re-inferred from every frame. We wrap the video model in a harness that owns the state. The game engine evolves everything the rules can decide and renders it as a low-poly proxy. The VLM takes over where rules run out: it turns states into prompts, reasons about how the world should evolve, and registers its decisions back into the engine.</p>
-  <p class="body">The video model then only has to render. It reads the per-frame proxy, a dynamic caption and a few reference frames, and generates one latent (four frames) per step with a causal DiT distilled to one or two denoising steps.</p>
+  <h2><span class="k"><span lang="en">OVERVIEW</span><span lang="zh">概览</span></span><span lang="en">A harness around the video model</span><span lang="zh">用 Harness 包住视频模型</span></h2>
+  <p class="body"><span lang="en">Interactive world models that only roll out pixels keep the world state implicit: once something leaves the view it is gone, and game rules have to be re-inferred from every frame. We wrap the video model in a harness that owns the state. The game engine evolves everything the rules can decide and renders it as a low-poly proxy. The VLM takes over where rules run out: it turns states into prompts, reasons about how the world should evolve, and registers its decisions back into the engine.</span><span lang="zh">只靠逐帧外推像素的交互式世界模型，世界状态都是隐式的：东西一离开视野就消失，游戏规则也要从每一帧里重新推断。我们给视频模型套上一层 Harness，由它持有世界状态。规则能决定的状态演化全部交给游戏引擎，引擎再把结果渲染成低模代理画面。规则管不到的地方由 VLM 接手：它把状态写成 prompt，推理世界接下来该怎样演化，再把决定注册回游戏引擎。</span></p>
+  <p class="body"><span lang="en">The video model then only has to render. It reads the per-frame proxy, a dynamic caption and a few reference frames, and generates one latent (four frames) per step with a causal DiT distilled to one or two denoising steps.</span><span lang="zh">于是视频模型只需要负责渲染。它读入逐帧的低模代理画面、一条动态描述和几张参考帧，用蒸馏到一到两步去噪的因果 DiT，每一步生成一个 latent（四帧）。</span></p>
   <div class="pill-row">
-    <span class="pill sage">Game engine: rule-based state</span>
-    <span class="pill mauve">VLM: reasoning beyond rules</span>
-    <span class="pill sand">Multi-reference appearance</span>
-    <span class="pill rose">Spatial memory by camera pose</span>
+    <span class="pill sage"><span lang="en">Game engine: rule-based state</span><span lang="zh">游戏引擎：按规则演化状态</span></span>
+    <span class="pill mauve"><span lang="en">VLM: reasoning beyond rules</span><span lang="zh">VLM：规则之外的推理</span></span>
+    <span class="pill sand"><span lang="en">Multi-reference appearance</span><span lang="zh">多参考帧锁定外观</span></span>
+    <span class="pill rose"><span lang="en">Spatial memory by camera pose</span><span lang="zh">按相机位姿检索的空间记忆</span></span>
   </div>
 </div></section>
 
 <section id="method"><div class="wrap">
-  <h2 class="reveal"><span class="k">METHOD</span>How it works</h2>
+  <h2 class="reveal"><span class="k"><span lang="en">METHOD</span><span lang="zh">方法</span></span><span lang="en">How it works</span><span lang="zh">工作原理</span></h2>
   <div class="tabs reveal">
-    <button class="tab on" data-fig="overview">System overview</button>
-    <button class="tab" data-fig="loop">Interaction loop</button>
-    <button class="tab" data-fig="arch">Rendering model</button>
-    <div class="lang"><button data-lang="en" class="on">EN</button><button data-lang="zh">中文</button></div>
+    <button class="tab on" data-fig="overview"><span lang="en">System overview</span><span lang="zh">系统总览</span></button>
+    <button class="tab" data-fig="loop"><span lang="en">Interaction loop</span><span lang="zh">交互循环</span></button>
+    <button class="tab" data-fig="arch"><span lang="en">Rendering model</span><span lang="zh">渲染模型</span></button>
   </div>
   <div class="figbox reveal"><img id="fig" src="assets/fig/overview_en.png" alt="Method figure"></div>
   <p class="figcap" id="figcap"></p>
 
   <div class="kv reveal">
-    <h3>Rolling KV cache, one chunk at a time</h3>
-    <div class="figcap" style="margin-top:0">Each new chunk attends to retrieved spatial memory, the reference frames and a sliding window of recent chunks. The oldest chunk leaves the window as a new one arrives.</div>
+    <h3><span lang="en">Rolling KV cache, one chunk at a time</span><span lang="zh">滚动 KV 缓存，一次生成一个块</span></h3>
+    <div class="figcap" style="margin-top:0"><span lang="en">Each new chunk attends to retrieved spatial memory, the reference frames and a sliding window of recent chunks. The oldest chunk leaves the window as a new one arrives.</span><span lang="zh">每个新块都关注检索到的空间记忆、参考帧，以及最近若干块组成的滑动窗口。新块进来时，最旧的块离开窗口。</span></div>
     <div class="row" id="kvrow"></div>
     <div class="legend">
-      <span><i style="background:var(--rose)"></i>spatial memory</span>
-      <span><i style="background:var(--sand)"></i>reference frames</span>
-      <span><i style="background:#C7CDD2"></i>recent chunks</span>
-      <span><i style="background:var(--slate)"></i>chunk being generated</span>
+      <span><i style="background:var(--rose)"></i><span lang="en">spatial memory</span><span lang="zh">空间记忆</span></span>
+      <span><i style="background:var(--sand)"></i><span lang="en">reference frames</span><span lang="zh">参考帧</span></span>
+      <span><i style="background:#C7CDD2"></i><span lang="en">recent chunks</span><span lang="zh">最近的块</span></span>
+      <span><i style="background:var(--slate)"></i><span lang="en">chunk being generated</span><span lang="zh">正在生成的块</span></span>
     </div>
   </div>
 </div></section>
 
 <section id="results"><div class="wrap">
-  <h2 class="reveal"><span class="k">RESULTS</span>From proxy to picture</h2>
-  <p class="body reveal">A held-out clip from the desert courtyard scene. The engine provides only the left column; the middle column is generated chunk by chunk; the right column is the ground-truth render for reference.</p>
-  <div class="vlabels reveal"><span>Low-poly control</span><span>Ours</span><span>Ground truth</span></div>
+  <h2 class="reveal"><span class="k"><span lang="en">RESULTS</span><span lang="zh">结果</span></span><span lang="en">From proxy to picture</span><span lang="zh">从低模到画面</span></h2>
+  <p class="body reveal"><span lang="en">A held-out clip from the desert courtyard scene. The engine provides only the left column; the middle column is generated chunk by chunk; the right column is the ground-truth render for reference.</span><span lang="zh">沙漠庭院场景的一段留出评测片段。引擎只提供左列；中列逐块生成；右列是真值渲染，仅作参照。</span></p>
+  <div class="vlabels reveal"><span><span lang="en">Low-poly control</span><span lang="zh">低模控制</span></span><span><span lang="en">Ours</span><span lang="zh">生成画面</span></span><span><span lang="en">Ground truth</span><span lang="zh">真值</span></span></div>
   <div class="video reveal">
     <video src="assets/video/courtyard_clip.mp4" poster="assets/video/courtyard_clip_poster.jpg" autoplay muted loop playsinline preload="metadata"></video>
   </div>
-  <div class="grid3">
-    <div class="ph reveal">Racing demo · coming soon</div>
-    <div class="ph reveal">Third-person shooter · coming soon</div>
-    <div class="ph reveal">Coding-agent custom games · coming soon</div>
-  </div>
+</div></section>
+
+<section id="gallery"><div class="wrap">
+  <h2 class="reveal"><span class="k"><span lang="en">GALLERY</span><span lang="zh">示例</span></span><span lang="en">Four games, sixteen clips</span><span lang="zh">四个游戏，十六个例子</span></h2>
+  <p class="body reveal"><span lang="en">Four held-out clips per game, 15 seconds each. Left of the divider is the generated frame, right of it is the engine's low-poly proxy. Drag the divider with a mouse or a finger. Both halves are cut from the same video frame, so they never drift apart.</span><span lang="zh">每个游戏取四段留出评测片段，每段 15 秒。分割线左侧是生成画面，右侧是引擎低模，用鼠标或手指拖动分割线即可对比。两半取自同一帧视频，始终逐帧同步。</span></p>
+  <div class="gal" id="gal"></div>
+  <div class="ph reveal"><span><span lang="en">Coding-agent custom games · coming soon</span><span lang="zh">编码智能体定制的游戏 · 即将上线</span></span></div>
 </div></section>
 
 <section id="bibtex"><div class="wrap reveal">
-  <h2><span class="k">CITE</span>BibTeX</h2>
-  <pre class="bib" id="bib"><button class="copy" id="copy">Copy</button>@misc{matrixgame4,
+  <h2><span class="k"><span lang="en">CITE</span><span lang="zh">引用</span></span>BibTeX</h2>
+  <pre class="bib" id="bib"><button class="copy" id="copy"><span lang="en">Copy</span><span lang="zh">复制</span></button>@misc{matrixgame4,
   title  = {Matrix-Game 4.0},
   author = {To be announced},
   year   = {2026},
@@ -224,11 +258,94 @@
 }</pre>
 </div></section>
 
-<footer>Matrix-Game 4.0 · project page preview · content will be updated at release</footer>
+<footer><span lang="en">Matrix-Game 4.0 · project page preview · content will be updated at release</span><span lang="zh">Matrix-Game 4.0 · 项目主页预览版 · 正式发布时更新内容</span></footer>
 
 <div class="lightbox" id="lb"><img id="lbimg" alt=""></div>
 
 <script>
+// 十六例：每条视频左半是生成画面、右半是引擎低模（同一帧左右拼好）。每出一帧先整帧拷进缓冲画布，
+// 再按分割线从缓冲里各取一半画到可见画布上，两边来自同一次拷贝，不会错帧。只播放看得见的格子。
+const GAMES = {
+  castle: { en: 'Third-person shooter · Castle', zh: '第三人称射击 · 城堡' },
+  pyramid: { en: 'Third-person shooter · Pyramid', zh: '第三人称射击 · 金字塔' },
+  racing: { en: 'Racing', zh: '赛车' },
+  air: { en: 'Air combat', zh: '空战' }
+};
+const CLIPS = ['castle_01', 'castle_02', 'castle_04', 'castle_08', 'pyramid_01', 'pyramid_03', 'pyramid_06', 'pyramid_07',
+  'racing_06', 'racing_02', 'racing_03', 'racing_05', 'air_06', 'air_04', 'air_02', 'air_10'];
+const HW = 864, HH = 480, tiles = [], queue = [];
+const RVFC = 'requestVideoFrameCallback' in HTMLVideoElement.prototype;   // 支持的浏览器只在出新帧时拷贝，不支持的每次刷新都拷
+let loading = 0;
+// 桌面上十六格同时进入视野，一起下载会谁都起不来；最多同时下 4 条，先进入视野的先下
+function pump() {
+  while (loading < 4 && queue.length) {
+    const t = queue.shift();
+    let done = false;
+    const fin = () => { if (!done) { done = true; loading--; pump(); } };
+    loading++;
+    t.v.addEventListener('canplay', fin, { once: true });
+    t.v.addEventListener('error', fin, { once: true });
+    t.v.src = t.src;
+    if (t.vis) t.v.play().catch(() => {});
+  }
+}
+const tio = new IntersectionObserver((es) => es.forEach((e) => {
+  const t = e.target._t;
+  t.vis = e.isIntersecting;
+  if (!t.vis) { t.v.pause(); return; }
+  if (!t.queued) { t.queued = true; queue.push(t); pump(); } else if (t.v.getAttribute('src')) t.v.play().catch(() => {});
+}), { rootMargin: '120px 0px' });
+function setTilePos(t, e) {
+  const r = t.el.getBoundingClientRect();
+  t.pos = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+  t.el.style.setProperty('--pos', t.pos * 100 + '%');
+  t.dirty = true;
+}
+CLIPS.forEach((c) => {
+  const g = GAMES[c.split('_')[0]], f = document.createElement('figure');
+  f.className = 'tile';
+  f.innerHTML = `<div class="compare" style="--pos:50%"><img src="assets/gallery/${c}.jpg" alt="" loading="lazy">` +
+    `<canvas width="${HW}" height="${HH}"></canvas><video muted loop playsinline preload="none"></video>` +
+    '<div class="bar"></div><div class="knob">⇆</div>' +
+    '<span class="lab l"><span lang="en">Generated</span><span lang="zh">生成画面</span></span>' +
+    '<span class="lab r"><span lang="en">Low-poly proxy</span><span lang="zh">引擎低模</span></span></div>' +
+    `<figcaption><span lang="en">${g.en}</span><span lang="zh">${g.zh}</span></figcaption>`;
+  document.getElementById('gal').appendChild(f);
+  const el = f.firstElementChild, cv = el.querySelector('canvas');
+  const t = { el, src: `assets/gallery/${c}.mp4`, v: el.querySelector('video'), cx: cv.getContext('2d'), pos: 0.5, vis: false, dirty: false, buf: null };
+  t.v.muted = true;
+  if (RVFC) { const onFrame = () => { t.fresh = true; t.v.requestVideoFrameCallback(onFrame); }; t.v.requestVideoFrameCallback(onFrame); }
+  el._t = t;
+  el.addEventListener('pointerdown', (e) => {
+    el.setPointerCapture(e.pointerId);
+    if (e.pointerType === 'mouse') setTilePos(t, e);          // 手指按下先不动，横向拖才动，竖向滑照常滚动页面
+    if (t.vis && t.v.paused) t.v.play().catch(() => {});      // 省电模式拦了自动播放时，点一下就能播
+  });
+  el.addEventListener('pointermove', (e) => { if (el.hasPointerCapture(e.pointerId)) setTilePos(t, e); });
+  tiles.push(t);
+  tio.observe(el);
+});
+function grab(t) {
+  if (!t.buf) { t.buf = document.createElement('canvas'); t.buf.width = 2 * HW; t.buf.height = HH; t.bx = t.buf.getContext('2d'); }
+  t.bx.drawImage(t.v, 0, 0, 2 * HW, HH);
+  t.fresh = false;
+  t.dirty = true;
+}
+function paint(t) {
+  const w = Math.round(HW * t.pos);
+  if (w > 0) t.cx.drawImage(t.buf, 0, 0, w, HH, 0, 0, w, HH);
+  if (w < HW) t.cx.drawImage(t.buf, HW + w, 0, HW - w, HH, w, 0, HW - w, HH);
+  t.el.classList.add('live');
+}
+(function loop() {
+  tiles.forEach((t) => {
+    if (!t.vis || t.v.readyState < 2) return;
+    if (t.fresh || !t.buf || (!RVFC && !t.v.paused)) grab(t);
+    if (t.dirty && t.buf) { paint(t); t.dirty = false; }
+  });
+  requestAnimationFrame(loop);
+})();
+
 // 进场动画与数字滚动
 const io = new IntersectionObserver((es) => es.forEach((e) => {
   if (!e.isIntersecting) return;
@@ -243,52 +360,67 @@ function countUp(el) {
   requestAnimationFrame(step);
 }
 
-// 对比滑条：自动来回扫，用户一碰就停
-const cmp = document.getElementById('cmp');
-let auto = true, phase = 0;
-function setPos(p) { cmp.style.setProperty('--pos', Math.max(0, Math.min(100, p)) + '%'); }
-(function sweep() { if (!auto) return; phase += 0.012; setPos(50 + 32 * Math.sin(phase)); requestAnimationFrame(sweep); })();
-function fromEvent(e) { const r = cmp.getBoundingClientRect(); setPos(((e.clientX - r.left) / r.width) * 100); }
-cmp.addEventListener('pointerdown', (e) => { auto = false; cmp.setPointerCapture(e.pointerId); fromEvent(e); });
-cmp.addEventListener('pointermove', (e) => { if (e.buttons) fromEvent(e); });
-
-// 视频版对比：一条视频左半是低模、右半是生成，画布按分割线位置各取一半，两边天然同步
-const pv = document.getElementById('pairv'), cv = document.getElementById('cmpc'), cx = cv.getContext('2d');
-function drawPair() {
-  if (pv.readyState >= 2) {
-    const p = parseFloat(getComputedStyle(cmp).getPropertyValue('--pos')) / 100, w = Math.round(864 * p);
-    cx.drawImage(pv, 864, 0, 864, 480, 0, 0, 864, 480);
-    if (w > 0) cx.drawImage(pv, 0, 0, w, 480, 0, 0, w, 480);
-  }
-  requestAnimationFrame(drawPair);
+// 顶部总视频：按语言取 teaser_zh / teaser_en，英文文件还没放进来时自动退回中文那个
+const tv = document.getElementById('teaser'), snd = document.getElementById('snd');
+let enMissing = false;
+function setTeaser() {
+  const l = lang === 'en' && !enMissing ? 'en' : 'zh', src = `assets/video/teaser_${l}.mp4`;
+  if (tv.getAttribute('src') === src) return;
+  const t = tv.currentTime;
+  tv.poster = `assets/video/teaser_${l}.jpg`;
+  tv.src = src;
+  if (t > 0) tv.addEventListener('loadedmetadata', () => { tv.currentTime = t; }, { once: true });
+  tv.play().catch(() => {});
 }
-pv.addEventListener('playing', () => { cv.style.display = 'block'; }, { once: true });
-pv.play && pv.play().catch(() => {});
-requestAnimationFrame(drawPair);
+tv.addEventListener('error', () => { if (lang === 'en' && !enMissing) { enMissing = true; setTeaser(); } });
+snd.onclick = () => { tv.muted = false; tv.volume = 1; tv.play().catch(() => {}); };
+tv.addEventListener('volumechange', () => snd.classList.toggle('off', !tv.muted));
 
-// 方法图分页与中英切换
+// 方法图分页
 const caps = {
-  overview: 'The VLM and the game engine form the harness of the video model. The engine evolves the state wherever rules apply; the VLM decides what rules cannot and registers it into the engine, and retrieves states to write prompts.',
-  loop: '(A) Once per session, reference frames and a prompt become an appearance prefix. (B) Every chunk, the harness emits a low-poly proxy and a dynamic caption, and the streaming renderer turns them into RGB frames.',
-  arch: 'The rendering model: a 148-channel input (noisy latent, control latent, zero padding), a 30-layer causal DiT with KV-cached self-attention and text cross-attention, a flow update in one or two steps, and a TAEHV decoder.'
+  overview: {
+    en: 'The VLM and the game engine form the harness of the video model. The engine evolves the state wherever rules apply; the VLM decides what rules cannot and registers it into the engine, and retrieves states to write prompts.',
+    zh: 'VLM 与游戏引擎组成视频模型的 Harness。规则管得到的地方由引擎演化状态；规则管不到的由 VLM 决定并注册进引擎，VLM 也检索状态来写 prompt。'
+  },
+  loop: {
+    en: '(A) Once per session, reference frames and a prompt become an appearance prefix. (B) Every chunk, the harness emits a low-poly proxy and a dynamic caption, and the streaming renderer turns them into RGB frames.',
+    zh: '(A) 每个会话一次：参考帧和 prompt 编码成外观前缀。(B) 每个块：Harness 输出低模代理画面和动态描述，流式渲染器把它们变成 RGB 画面。'
+  },
+  arch: {
+    en: 'The rendering model: a 148-channel input (noisy latent, control latent, zero padding), a 30-layer causal DiT with KV-cached self-attention and text cross-attention, a flow update in one or two steps, and a TAEHV decoder.',
+    zh: '渲染模型：148 通道输入（带噪 latent、控制 latent、零填充），30 层因果 DiT（自注意力带 KV 缓存，另有文本交叉注意力），一到两步完成 flow 更新，最后由 TAEHV 解码。'
+  }
 };
-let cur = 'overview', lang = 'en';
+let cur = 'overview', lang = document.documentElement.dataset.lang;
 const fig = document.getElementById('fig'), figcap = document.getElementById('figcap');
+fig.onload = () => { fig.style.opacity = 1; };
 function showFig() {
+  const src = `assets/fig/${cur}_${lang}.png`;
+  figcap.textContent = caps[cur][lang];
+  fig.alt = lang === 'zh' ? '方法图' : 'Method figure';
+  if (fig.getAttribute('src') === src) return;
   fig.style.opacity = 0;
-  setTimeout(() => { fig.src = `assets/fig/${cur}_${lang}.png`; figcap.textContent = caps[cur]; }, 180);
-  fig.onload = () => { fig.style.opacity = 1; };
+  setTimeout(() => { fig.src = src; }, 180);
 }
 document.querySelectorAll('.tab').forEach((b) => b.onclick = () => {
   document.querySelectorAll('.tab').forEach((x) => x.classList.toggle('on', x === b)); cur = b.dataset.fig; showFig();
 });
-document.querySelectorAll('.lang button').forEach((b) => b.onclick = () => {
-  document.querySelectorAll('.lang button').forEach((x) => x.classList.toggle('on', x === b)); lang = b.dataset.lang; showFig();
-});
-figcap.textContent = caps[cur];
 const lb = document.getElementById('lb');
 fig.onclick = () => { document.getElementById('lbimg').src = fig.src; lb.classList.add('on'); };
 lb.onclick = () => lb.classList.remove('on');
+
+// 中英切换：文案由 CSS 按 data-lang 显示对应的 span，方法图、图注、顶部视频在这里切；选择记进 localStorage
+function setLang(l, save) {
+  lang = l;
+  document.documentElement.dataset.lang = l;
+  document.documentElement.lang = l === 'zh' ? 'zh-CN' : 'en';
+  document.querySelectorAll('#langsw button').forEach((b) => b.classList.toggle('on', b.dataset.lang === l));
+  if (save) { try { localStorage.setItem('mg4-lang', l); } catch (e) {} }
+  showFig();
+  setTeaser();
+}
+document.querySelectorAll('#langsw button').forEach((b) => b.onclick = () => setLang(b.dataset.lang, true));
+setLang(lang, false);
 
 // 滚动 KV 缓存：记忆 3、参考帧 3、窗口 12 格，末格是正在生成的块
 const row = document.getElementById('kvrow');
@@ -305,11 +437,12 @@ setInterval(() => {
   setTimeout(() => old.remove(), 450);
 }, 900);
 
-// 复制 BibTeX
-document.getElementById('copy').onclick = () => {
-  const t = document.getElementById('bib').innerText.replace(/^Copy\s*/, '');
+// 复制 BibTeX：只取按钮之外的文字
+const copyBtn = document.getElementById('copy');
+copyBtn.onclick = () => {
+  const t = [...document.getElementById('bib').childNodes].filter((n) => n !== copyBtn).map((n) => n.textContent).join('');
   navigator.clipboard && navigator.clipboard.writeText(t);
-  document.getElementById('copy').textContent = 'Copied';
+  copyBtn.innerHTML = '<span lang="en">Copied</span><span lang="zh">已复制</span>';
 };
 </script>
 </body>
