@@ -78,6 +78,12 @@
   .tile { margin: 0; }
   .tile figcaption { font-size: 13px; font-weight: 600; color: var(--ink); margin-top: 8px; }
 
+  /* 长时间游玩：每个游戏一整行，带声音 */
+  .longs { display: grid; gap: 30px; margin-top: 24px; }
+  .longs .tile figcaption { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; }
+  .longs .tile figcaption .dur { color: var(--sub); font-weight: 500; font-variant-numeric: tabular-nums; }
+  .compare .sound { top: auto; bottom: 12px; left: 12px; z-index: 2; pointer-events: auto; }
+
   /* 数字 */
   .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 44px auto 0; max-width: 960px; }
   .stat { background: var(--panel); border: 1px solid var(--hair); border-radius: var(--radius); padding: 18px 16px; text-align: center; }
@@ -105,17 +111,26 @@
   .lang button.on { background: var(--mauve-l); color: var(--mauve); }
   .figbox { background: #fff; border: 1px solid var(--hair); border-radius: var(--radius); padding: 14px; }
   .figbox img { width: 100%; display: block; transition: opacity .35s; cursor: zoom-in; }
+  .figbox .anim { cursor: zoom-in; transition: opacity .35s; }
+  .figbox .anim[hidden], .figbox img[hidden] { display: none; }
   .figcap { font-size: 14px; color: var(--sub); margin-top: 12px; max-width: 900px; }
 
   /* 滚动 KV 缓存动画 */
   .kv { margin-top: 36px; background: var(--panel); border: 1px solid var(--hair); border-radius: var(--radius); padding: 20px 22px; }
   .kv h3 { margin: 0 0 4px; font-size: 17px; }
   .kv .row { display: flex; align-items: flex-end; gap: 4px; margin: 18px 0 8px; height: 46px; overflow: hidden; }
-  .kv .grp { display: flex; gap: 4px; padding-right: 10px; }
-  .kv .sq { width: 22px; height: 22px; border-radius: 4px; flex: 0 0 auto; transition: transform .45s, opacity .45s, background .45s; }
+  .kv .grp { display: flex; gap: 4px; padding-right: 10px; flex: 0 0 auto; }
+  .kv .sq { width: 22px; height: 22px; border-radius: 4px; flex: 0 0 auto; transition: transform .45s, opacity .45s, background .45s, box-shadow .45s; }
   .kv .sq.mem { background: var(--rose); } .kv .sq.ref { background: var(--sand); }
-  .kv .sq.win { background: #C7CDD2; } .kv .sq.cur { background: var(--slate); transform: translateY(-10px); }
-  .kv .sq.enter { opacity: 0; transform: translateY(-24px); }
+  .kv .sq.mem.hit { box-shadow: 0 0 0 3px var(--rose-l); transform: translateY(-4px); }
+  .kv .sq.win { background: #C7CDD2; } .kv .sq.cur { background: var(--slate); }
+  /* 窗口轨道：每格绝对定位，靠 transform 平移，新块从右端进、最旧的块从左端滑出 */
+  .kv .track { position: relative; flex: 1 1 auto; min-width: 0; height: 46px; overflow: hidden;
+               -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 18px); mask-image: linear-gradient(90deg, transparent 0, #000 18px); }
+  .kv .track .sq { position: absolute; left: 0; bottom: 0; transition: transform .6s cubic-bezier(.4,0,.2,1), opacity .6s, background .45s; }
+  .kv .track .sq.cur { animation: denoise .9s steps(1) infinite; }
+  @keyframes denoise { 0% { background: #9AA3AB; } 33% { background: #6F7982; } 66% { background: var(--slate); } }
+  .kv .count { margin-left: auto; font: 600 13px var(--font); font-variant-numeric: tabular-nums; color: var(--slate); white-space: nowrap; }
   .kv .legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--sub); }
   .kv .legend i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
 
@@ -167,7 +182,7 @@
 <nav><div class="wrap">
   <span class="brand">Matrix-Game 4.0</span>
   <div class="right">
-    <span class="links"><a href="#overview"><span lang="en">Overview</span><span lang="zh">概览</span></a><a href="#method"><span lang="en">Method</span><span lang="zh">方法</span></a><a href="#results"><span lang="en">Results</span><span lang="zh">结果</span></a><a href="#gallery"><span lang="en">Gallery</span><span lang="zh">示例</span></a><a href="#bibtex"><span lang="en">BibTeX</span><span lang="zh">引用</span></a></span>
+    <span class="links"><a href="#overview"><span lang="en">Overview</span><span lang="zh">概览</span></a><a href="#method"><span lang="en">Method</span><span lang="zh">方法</span></a><a href="#results"><span lang="en">Results</span><span lang="zh">结果</span></a><a href="#longplay"><span lang="en">Long play</span><span lang="zh">长时间游玩</span></a><a href="#gallery"><span lang="en">Gallery</span><span lang="zh">示例</span></a><a href="#bibtex"><span lang="en">BibTeX</span><span lang="zh">引用</span></a></span>
     <div class="lang" id="langsw"><button data-lang="zh">中文</button><button data-lang="en">English</button></div>
   </div>
 </div></nav>
@@ -216,7 +231,7 @@
     <button class="tab" data-fig="loop"><span lang="en">Interaction loop</span><span lang="zh">交互循环</span></button>
     <button class="tab" data-fig="arch"><span lang="en">Rendering model</span><span lang="zh">渲染模型</span></button>
   </div>
-  <div class="figbox reveal"><img id="fig" src="assets/fig/overview_en.png" alt="Method figure"></div>
+  <div class="figbox reveal" id="figbox"><img id="fig" src="assets/fig/overview_en.png" alt="Method figure"></div>
   <p class="figcap" id="figcap"></p>
 
   <div class="kv reveal">
@@ -228,6 +243,7 @@
       <span><i style="background:var(--sand)"></i><span lang="en">reference frames</span><span lang="zh">参考帧</span></span>
       <span><i style="background:#C7CDD2"></i><span lang="en">recent chunks</span><span lang="zh">最近的块</span></span>
       <span><i style="background:var(--slate)"></i><span lang="en">chunk being generated</span><span lang="zh">正在生成的块</span></span>
+      <span class="count" id="kvcount"></span>
     </div>
   </div>
 </div></section>
@@ -239,6 +255,12 @@
   <div class="video reveal">
     <video src="assets/video/courtyard_clip.mp4" poster="assets/video/courtyard_clip_poster.jpg" autoplay muted loop playsinline preload="metadata"></video>
   </div>
+</div></section>
+
+<section id="longplay"><div class="wrap">
+  <h2 class="reveal"><span class="k"><span lang="en">LONG PLAY</span><span lang="zh">长时间游玩</span></span><span lang="en">One uninterrupted session per game</span><span lang="zh">每个游戏一段不间断的游玩</span></h2>
+  <p class="body reveal"><span lang="en">Three continuous sessions, 54 to 99 seconds each. Left of the divider is the generated frame, shown with the game HUD and the key inputs; right of it is the engine's low-poly proxy. Drag the divider to compare, and turn the sound on to hear the game audio.</span><span lang="zh">三个游戏各一段不间断的游玩，每段 54 到 99 秒。分割线左侧是生成画面，带游戏界面和当时的按键；右侧是引擎低模。拖动分割线对比，点「打开声音」可以听游戏音效。</span></p>
+  <div class="longs" id="longs"></div>
 </div></section>
 
 <section id="gallery"><div class="wrap">
@@ -262,6 +284,10 @@
 
 <div class="lightbox" id="lb"><img id="lbimg" alt=""></div>
 
+<!-- 方法图动画组件：各自注册到 window.MG4Fig，缺了哪个就退回那张静态 PNG -->
+<script src="assets/js/fig_overview.js"></script>
+<script src="assets/js/fig_loop.js"></script>
+<script src="assets/js/fig_arch.js"></script>
 <script>
 // 十六例：每条视频左半是生成画面、右半是引擎低模（同一帧左右拼好）。每出一帧先整帧拷进缓冲画布，
 // 再按分割线从缓冲里各取一半画到可见画布上，两边来自同一次拷贝，不会错帧。只播放看得见的格子。
@@ -301,21 +327,33 @@ function setTilePos(t, e) {
   t.el.style.setProperty('--pos', t.pos * 100 + '%');
   t.dirty = true;
 }
-CLIPS.forEach((c) => {
-  const g = GAMES[c.split('_')[0]], f = document.createElement('figure');
+// 建一格对比：十六例与长时间游玩共用。sound 为真时加「打开声音」按钮，同一时刻只让一格出声
+const SND_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>';
+function makeTile(host, base, cap, opt = {}) {
+  const f = document.createElement('figure'), pos = opt.pos || 0.5;
   f.className = 'tile';
-  f.innerHTML = `<div class="compare" style="--pos:50%"><img src="assets/gallery/${c}.jpg" alt="" loading="lazy">` +
+  f.innerHTML = `<div class="compare" style="--pos:${pos * 100}%"><img src="${base}.jpg" alt="" loading="lazy">` +
     `<canvas width="${HW}" height="${HH}"></canvas><video muted loop playsinline preload="none"></video>` +
     '<div class="bar"></div><div class="knob">⇆</div>' +
     '<span class="lab l"><span lang="en">Generated</span><span lang="zh">生成画面</span></span>' +
-    '<span class="lab r"><span lang="en">Low-poly proxy</span><span lang="zh">引擎低模</span></span></div>' +
-    `<figcaption><span lang="en">${g.en}</span><span lang="zh">${g.zh}</span></figcaption>`;
-  document.getElementById('gal').appendChild(f);
+    '<span class="lab r"><span lang="en">Low-poly proxy</span><span lang="zh">引擎低模</span></span>' +
+    (opt.sound ? `<button class="sound" type="button">${SND_SVG}<span lang="en">Sound on</span><span lang="zh">打开声音</span></button>` : '') +
+    `</div><figcaption>${cap}</figcaption>`;
+  host.appendChild(f);
   const el = f.firstElementChild, cv = el.querySelector('canvas');
-  const t = { el, src: `assets/gallery/${c}.mp4`, v: el.querySelector('video'), cx: cv.getContext('2d'), pos: 0.5, vis: false, dirty: false, buf: null };
+  const t = { el, src: `${base}.mp4`, v: el.querySelector('video'), cx: cv.getContext('2d'), pos, vis: false, dirty: false, buf: null };
   t.v.muted = true;
   if (RVFC) { const onFrame = () => { t.fresh = true; t.v.requestVideoFrameCallback(onFrame); }; t.v.requestVideoFrameCallback(onFrame); }
   el._t = t;
+  const sb = el.querySelector('.sound');
+  if (sb) {
+    sb.addEventListener('pointerdown', (e) => e.stopPropagation());
+    sb.onclick = () => {
+      tiles.forEach((o) => { if (o !== t && !o.v.muted) o.v.muted = true; });
+      t.v.muted = false; t.v.volume = 1; t.v.play().catch(() => {});
+    };
+    t.v.addEventListener('volumechange', () => sb.classList.toggle('off', !t.v.muted));
+  }
   el.addEventListener('pointerdown', (e) => {
     el.setPointerCapture(e.pointerId);
     if (e.pointerType === 'mouse') setTilePos(t, e);          // 手指按下先不动，横向拖才动，竖向滑照常滚动页面
@@ -324,6 +362,16 @@ CLIPS.forEach((c) => {
   el.addEventListener('pointermove', (e) => { if (el.hasPointerCapture(e.pointerId)) setTilePos(t, e); });
   tiles.push(t);
   tio.observe(el);
+}
+CLIPS.forEach((c) => {
+  const g = GAMES[c.split('_')[0]];
+  makeTile(document.getElementById('gal'), `assets/gallery/${c}`, `<span lang="en">${g.en}</span><span lang="zh">${g.zh}</span>`);
+});
+// 长时间游玩：三个游戏各一段，生成画面带游戏界面、按键与声音；分割线默认靠右，多露一些生成画面
+[['castle', '1:06'], ['pyramid', '1:39'], ['racing', '0:54']].forEach(([k, d]) => {
+  const g = GAMES[k];
+  makeTile(document.getElementById('longs'), `assets/long/long_${k}`,
+    `<span><span lang="en">${g.en}</span><span lang="zh">${g.zh}</span></span><span class="dur">${d}</span>`, { sound: true, pos: 0.7 });
 });
 function grab(t) {
   if (!t.buf) { t.buf = document.createElement('canvas'); t.buf.width = 2 * HW; t.buf.height = HH; t.bx = t.buf.getContext('2d'); }
@@ -392,16 +440,31 @@ const caps = {
   }
 };
 let cur = 'overview', lang = document.documentElement.dataset.lang;
-const fig = document.getElementById('fig'), figcap = document.getElementById('figcap');
+const fig = document.getElementById('fig'), figcap = document.getElementById('figcap'), figbox = document.getElementById('figbox');
 fig.onload = () => { fig.style.opacity = 1; };
+// 有动画组件（assets/js/fig_<名>.js 注册到 MG4Fig）的分页显示 SVG 动画，没有的退回静态 PNG。
+// 动画只在方法图在视野里、且是当前分页时播放；点动画仍打开同一张 PNG 大图，方便看细节
+const anims = {};
+let figVis = false;
+function syncAnims() { Object.entries(anims).forEach(([k, a]) => (k === cur && figVis ? a.ctl.play() : a.ctl.pause())); }
 function showFig() {
   const src = `assets/fig/${cur}_${lang}.png`;
   figcap.textContent = caps[cur][lang];
   fig.alt = lang === 'zh' ? '方法图' : 'Method figure';
-  if (fig.getAttribute('src') === src) return;
+  const make = window.MG4Fig && window.MG4Fig[cur];
+  if (make && !anims[cur]) {
+    const host = document.createElement('div'); host.className = 'anim'; figbox.appendChild(host);
+    host.onclick = () => { document.getElementById('lbimg').src = `assets/fig/${cur}_${lang}.png`; lb.classList.add('on'); };
+    anims[cur] = { host, ctl: make(host) };
+  }
+  Object.entries(anims).forEach(([k, a]) => { a.host.hidden = k !== cur; });
+  fig.hidden = !!anims[cur];
+  syncAnims();
+  if (anims[cur] || fig.getAttribute('src') === src) return;
   fig.style.opacity = 0;
   setTimeout(() => { fig.src = src; }, 180);
 }
+new IntersectionObserver((es) => { figVis = es[0].isIntersecting; syncAnims(); }).observe(figbox);
 document.querySelectorAll('.tab').forEach((b) => b.onclick = () => {
   document.querySelectorAll('.tab').forEach((x) => x.classList.toggle('on', x === b)); cur = b.dataset.fig; showFig();
 });
@@ -422,20 +485,49 @@ function setLang(l, save) {
 document.querySelectorAll('#langsw button').forEach((b) => b.onclick = () => setLang(b.dataset.lang, true));
 setLang(lang, false);
 
-// 滚动 KV 缓存：记忆 3、参考帧 3、窗口 12 格，末格是正在生成的块
-const row = document.getElementById('kvrow');
+// 滚动 KV 缓存：记忆 3、参考帧 3 固定在左边；右边是窗口轨道，末格是正在生成的块（两步去噪，颜色分两次变深）。
+// 每 0.9 秒生成完一块：整条窗口左移一格，新块从右端落下，最旧的块从左端滑出窗口；每 4 块按相机位姿重新检索一次记忆。
+// 窗口格数按轨道宽度算，手机上少几格。滚出视野或切到别的标签页时停住。
+const row = document.getElementById('kvrow'), kvcount = document.getElementById('kvcount');
 function grp(cls, n) { const g = document.createElement('div'); g.className = 'grp'; for (let i = 0; i < n; i++) { const s = document.createElement('div'); s.className = 'sq ' + cls; g.appendChild(s); } row.appendChild(g); return g; }
-grp('mem', 3); grp('ref', 3);
-const win = grp('win', 11);
-win.lastElementChild.className = 'sq cur';
-setInterval(() => {
-  if (document.hidden) return;
-  win.lastElementChild.className = 'sq win';
-  const s = document.createElement('div'); s.className = 'sq cur enter'; win.appendChild(s);
-  requestAnimationFrame(() => requestAnimationFrame(() => s.classList.remove('enter')));
-  const old = win.firstElementChild; old.style.opacity = 0; old.style.transform = 'translateY(14px)';
-  setTimeout(() => old.remove(), 450);
-}, 900);
+const memg = grp('mem', 3); grp('ref', 3);
+const track = document.createElement('div'); track.className = 'track'; row.appendChild(track);
+const SLOT = 26;
+let kvItems = [], kvN = 0, kvChunk = 0, kvVis = false;
+const kvPlace = (it) => { it.el.style.transform = `translate(${it.i * SLOT + 18}px, ${it.cur ? -10 : 0}px)`; };
+function kvLayout() {
+  const n = Math.max(4, Math.min(20, Math.floor((track.clientWidth - 18) / SLOT)));   // 方法图里是最近 20 块
+  if (n === kvN) return;
+  kvN = n; track.innerHTML = ''; kvItems = [];
+  for (let i = 0; i < n; i++) {
+    const it = { el: document.createElement('div'), i, cur: i === n - 1 };
+    it.el.className = 'sq ' + (it.cur ? 'cur' : 'win'); kvPlace(it); track.appendChild(it.el); kvItems.push(it);
+  }
+}
+function kvCount() {
+  kvcount.innerHTML = `<span lang="en">chunk #${kvChunk + 1} · ${4 * kvChunk} frames out</span><span lang="zh">第 ${kvChunk + 1} 块 · 已输出 ${4 * kvChunk} 帧</span>`;
+}
+function kvTick() {
+  if (!kvVis || document.hidden) return;
+  kvLayout();
+  kvChunk++;
+  kvItems.forEach((it) => { it.i--; if (it.cur) { it.cur = false; it.el.className = 'sq win'; } kvPlace(it); });
+  const old = kvItems.shift(); old.el.style.opacity = 0; setTimeout(() => old.el.remove(), 650);
+  const it = { el: document.createElement('div'), i: kvN - 1, cur: true };
+  it.el.className = 'sq cur'; it.el.style.opacity = 0;
+  it.el.style.transform = `translate(${it.i * SLOT + 18}px, -36px)`;
+  track.appendChild(it.el); kvItems.push(it);
+  requestAnimationFrame(() => requestAnimationFrame(() => { it.el.style.opacity = 1; kvPlace(it); }));
+  if (kvChunk % 4 === 0) {
+    const m = memg.children[(kvChunk / 4) % 3];
+    m.classList.add('hit'); setTimeout(() => m.classList.remove('hit'), 700);
+  }
+  kvCount();
+}
+kvLayout(); kvCount();
+addEventListener('resize', () => { kvN = 0; kvLayout(); });
+new IntersectionObserver((es) => { kvVis = es[0].isIntersecting; }).observe(row);
+setInterval(kvTick, 900);
 
 // 复制 BibTeX：只取按钮之外的文字
 const copyBtn = document.getElementById('copy');
