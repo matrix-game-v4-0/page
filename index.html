@@ -166,7 +166,7 @@
 
 <section id="overview"><div class="wrap reveal">
   <h2><span class="k">OVERVIEW</span>A harness around the video model</h2>
-  <p class="body">Interactive world models that only roll out pixels keep the world state implicit: once something leaves the view it is gone, and game rules have to be re-inferred from every frame. We wrap the video model in a harness that owns the state. The game engine evolves everything the rules can decide and renders it as a low-poly proxy. The VLM takes over where rules run out: it turns states into prompts, imagines missing content, reasons about how dialogue or exploration changes the world, and registers its decisions back into the engine.</p>
+  <p class="body">Interactive world models that only roll out pixels keep the world state implicit: once something leaves the view it is gone, and game rules have to be re-inferred from every frame. We wrap the video model in a harness that owns the state. The game engine evolves everything the rules can decide and renders it as a low-poly proxy. The VLM takes over where rules run out: it turns states into prompts, reasons about how the world should evolve, and registers its decisions back into the engine.</p>
   <p class="body">The video model then only has to render. It reads the per-frame proxy, a dynamic caption and a few reference frames, and generates one latent (four frames) per step with a causal DiT distilled to one or two denoising steps.</p>
   <div class="pill-row">
     <span class="pill sage">Game engine: rule-based state</span>
