@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Matrix-Game 4.0</title>
-<meta name="description" content="Matrix-Game 4.0: code builds the game, a VLM handles what rules cannot, and a few-step causal video model renders the world in real time.">
+<meta name="description" content="Matrix-Game 4.0: code builds the game, a coding agent handles what rules cannot, and a few-step causal video model renders the world in real time.">
 <script>
 // 先定语言再渲染，避免中英文闪一下：链接里的 ?lang=zh / ?lang=en 优先，其次是记住的选择，最后看浏览器语言
 (function () {
@@ -218,7 +218,7 @@
 <header class="hero"><div class="wrap">
   <div class="pname">Matrix-Game 4.0</div>
   <h1><span lang="en">Code builds the game, <span class="grad">AI renders the world</span> in real time</span><span lang="zh">代码搭建游戏，<span class="grad">AI 实时渲染世界</span></span></h1>
-  <p class="lead"><span lang="en">A game engine keeps the world state and draws a cheap low-poly proxy. A VLM decides whatever the rules cannot. A few-step causal video model turns every chunk into a finished frame on a single consumer GPU.</span><span lang="zh">游戏引擎维护世界状态，画出一份廉价的低模代理画面。规则决定不了的事交给 VLM。少步数的因果视频模型在一张消费级显卡上，把每个块渲染成成品画面。</span></p>
+  <p class="lead"><span lang="en">A game engine keeps the world state and draws a cheap low-poly proxy. A coding agent turns what the player asks for into new rules and prompts. A few-step causal video model turns every chunk into a finished frame on a single consumer GPU.</span><span lang="zh">游戏引擎维护世界状态，画出一份廉价的低模代理画面。玩家想要的新玩法由 Coding Agent 写成新的规则和提示词。少步数的因果视频模型在一张消费级显卡上，把每个块渲染成成品画面。</span></p>
   <div class="authors">Matrix-Game Team</div>
   <div class="btns">
     <span class="btn soon"><span lang="en">Paper</span><span lang="zh">论文</span> <span class="tag"><span lang="en">soon</span><span lang="zh">即将发布</span></span></span>
@@ -242,11 +242,11 @@
 
 <section id="overview"><div class="wrap reveal">
   <h2><span class="k"><span lang="en">OVERVIEW</span><span lang="zh">概览</span></span><span lang="en">A harness around the video model</span><span lang="zh">用 Harness 包住视频模型</span></h2>
-  <p class="body"><span lang="en">Interactive world models that only roll out pixels keep the world state implicit: once something leaves the view it is gone, and game rules have to be re-inferred from every frame. We wrap the video model in a harness that owns the state. The game engine evolves everything the rules can decide and renders it as a low-poly proxy. The VLM takes over where rules run out: it turns states into prompts, reasons about how the world should evolve, and registers its decisions back into the engine.</span><span lang="zh">只靠逐帧外推像素的交互式世界模型，世界状态都是隐式的：东西一离开视野就消失，游戏规则也要从每一帧里重新推断。我们给视频模型套上一层 Harness，由它持有世界状态。规则能决定的状态演化全部交给游戏引擎，引擎再把结果渲染成低模代理画面。规则管不到的地方由 VLM 接手：它把状态写成 prompt，推理世界接下来该怎样演化，再把决定注册回游戏引擎。</span></p>
+  <p class="body"><span lang="en">Interactive world models that only roll out pixels keep the world state implicit: once something leaves the view it is gone, and game rules have to be re-inferred from every frame. We wrap the video model in a harness that owns the state. The game engine evolves everything the rules can decide and renders it as a low-poly proxy. The Coding Agent takes over where rules run out: it turns a user's instruction into new rules registered into the engine, and retrieves the engine state to write prompts that carry the current state and the user's intent.</span><span lang="zh">只靠逐帧外推像素的交互式世界模型，世界状态都是隐式的：东西一离开视野就消失，游戏规则也要从每一帧里重新推断。我们给视频模型套上一层 Harness，由它持有世界状态。规则能决定的状态演化全部交给游戏引擎，引擎再把结果渲染成低模代理画面。规则管不到的地方由 Coding Agent 接手：它把用户指令写成新的规则、修改游戏引擎，并检索引擎状态，结合用户意图转述细化成提示词。</span></p>
   <p class="body"><span lang="en">The video model then only has to render. It reads the per-frame proxy, a dynamic caption and a few reference frames, and generates one latent (four frames) per step with a causal DiT distilled to one or two denoising steps.</span><span lang="zh">于是视频模型只需要负责渲染。它读入逐帧的低模代理画面、一条动态描述和几张参考帧，用蒸馏到一到两步去噪的因果 DiT，每一步生成一个 latent（四帧）。</span></p>
   <div class="pill-row">
     <span class="pill sage"><span lang="en">Game engine: rule-based state</span><span lang="zh">游戏引擎：按规则演化状态</span></span>
-    <span class="pill mauve"><span lang="en">VLM: reasoning beyond rules</span><span lang="zh">VLM：规则之外的推理</span></span>
+    <span class="pill mauve"><span lang="en">Coding Agent: directing beyond rules</span><span lang="zh">Coding Agent：新的规则与推理想象</span></span>
     <span class="pill sand"><span lang="en">Multi-reference appearance</span><span lang="zh">多参考帧锁定外观</span></span>
     <span class="pill rose"><span lang="en">Spatial memory by camera pose</span><span lang="zh">按相机位姿检索的空间记忆</span></span>
   </div>
@@ -473,8 +473,8 @@ tv.addEventListener('volumechange', () => snd.classList.toggle('off', !tv.muted)
 // 方法图：只留系统总览一张（交互循环、渲染模型两张 10-14 移出仓库）
 const caps = {
   overview: {
-    en: 'The VLM and the game engine form the harness of the video model. The engine evolves the state wherever rules apply; the VLM decides what rules cannot and registers it into the engine, and retrieves states to write prompts.',
-    zh: 'VLM 与游戏引擎组成视频模型的 Harness。规则管得到的地方由引擎演化状态；规则管不到的由 VLM 决定并注册进引擎，VLM 也检索状态来写 prompt。'
+    en: 'The Coding Agent and the game engine form the harness of the video model. The engine evolves the state wherever rules apply; the Coding Agent turns user instructions into new rules registered into the engine, and retrieves states to write prompts.',
+    zh: 'Coding Agent 与游戏引擎组成视频模型的 Harness。规则管得到的地方由引擎演化状态；Coding Agent 把用户指令写成新的规则、修改引擎，也检索状态来写提示词。'
   }
 };
 let cur = 'overview', lang = document.documentElement.dataset.lang;

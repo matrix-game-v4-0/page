@@ -1,11 +1,12 @@
 /* 方法图「系统总览」动画组件：复刻 assets/fig/overview_<lang>.png。
-   几何、配色、文字照出图脚本 artifacts/method_fig_1012/make_fig_v4.py 逐项搬过来（画布 1800×1000，与 PNG 同比例）。
+   几何、配色照出图脚本 artifacts/method_fig_1012/make_fig_v4.py 逐项搬过来（画布 1800×1000，与 PNG 同比例）；
+   文字按 make_fig_v5.py，即 PR 稿「路线」一节更新后带 Coding Agent 的画板（10-14 对齐）。
    动画沿数据流向一圈 10 秒，每帧状态只由时间算出，所以首尾接得上、暂停后接着播：
      0.0–1.5 s  用户指令、玩家两框依次亮，点流入 Harness
-     1.0–3.0 s  VLM 与游戏引擎之间「注册」「检索」交替，小地图里的角色走一步
+     1.0–3.0 s  Coding Agent 与游戏引擎之间「修改」「检索」交替，小地图里的角色走一步
      2.7–4.6 s  语义条件逐段写出、低模代理画面叠帧前推、三张参考帧依次亮
      4.4–6.4 s  三路条件汇入 DiT；DiT 的块与注意力窗口左移一格，新块两步去噪
-     6.0–8.4 s  画面叠帧前推，「新画面」沿闭环线回到 VLM
+     6.0–8.4 s  画面叠帧前推，「新画面」沿闭环线回到 Coding Agent
      6.4–9.6 s  当前块写入空间记忆，相机位姿到达，按 K/V 取回 3 帧，记忆格抬起
    prefers-reduced-motion 时停在与 PNG 相同的静态状态。 */
 (function () {
@@ -22,8 +23,8 @@
   var NEUT = { fill: '#FFFFFF', stroke: '#A9AFB4', accent: LINE };
   var SW1 = 3.0, SW2 = 2.2;
 
-  // 胶囊标签宽度：Noto Sans CJK Bold 21px 实量字宽，与 PNG 一致
-  var PILLW = { '注册': 42, '检索': 42, '新画面': 63, '写入': 42, '相机位姿': 84, 'K/V': 38.3,
+  // 胶囊标签宽度：Noto Sans CJK Bold 21px 实量字宽，与 PNG 一致（修改、Register、Retrieval 为 10-14 按同口径补量）
+  var PILLW = { '注册': 42, '修改': 42, 'Register': 83.6, 'Retrieval': 88.4, '检索': 42, '新画面': 63, '写入': 42, '相机位姿': 84, 'K/V': 38.3,
     'register': 78.2, 'retrieval': 83, 'new frames': 117.8, 'write': 51.3, 'camera pose': 129.5 };
 
   function n(v) { return Math.round(v * 10) / 10; }
@@ -198,13 +199,13 @@
       s += text2(c[0], 50, c[2], c[3], 22, LINE, 700, 'start', 0, ' xml:space="preserve"') + line(c[0], 66, c[1], 66, HAIR, 1.4);
     });
 
-    // ---------- Harness：VLM 与游戏引擎合在一个虚线框里 ----------
+    // ---------- Harness：Coding Agent 与游戏引擎合在一个虚线框里 ----------
     s += rect(270, 128, 440, 622, '#FAF9FB', SEM.stroke, 2.6, 18, ' data-k="hbox" stroke-dasharray="9 6"');
-    s += text2(292, 162, 'Harness：VLM + 游戏引擎', 'HARNESS: VLM + GAME ENGINE', 20, SEM.accent, 700, 'start', 396);
+    s += text2(292, 162, 'Harness：Coding Agent + 游戏引擎', 'HARNESS: Coding Agent + GAME ENGINE', 20, SEM.accent, 700, 'start', 396);
 
-    var sb = card('vlm', 290, 185, 400, 175, SEM, 'VLM', 'VLM', '规则之外的推理与想象', 'reasoning beyond rules',
+    var sb = card('vlm', 290, 185, 400, 175, SEM, 'Coding Agent', 'Coding Agent', '新的规则与推理想象', 'Directing beyond rules',
       { sw: 2.8, win: [[0.75, 2.9], [8.3, 9.2]] });
-    [['状态转 prompt', 'State → prompt', [[2.55, 3.2]]], ['演化推理', 'Infer evolution', [[0.95, 1.5], [1.95, 2.5]]]].forEach(function (c, i) {
+    [['转述细化提示词', 'New Prompts', [[2.55, 3.2]]], ['新的规则', 'New Mechanisms', [[0.95, 1.5], [1.95, 2.5]]]].forEach(function (c, i) {
       var x0 = 312 + i * 184;
       s += rect(x0, sb + 14, 172, 40, '#FFFFFF', SEM.stroke, 1.6, 8) +
         rect(x0, sb + 14, 172, 40, SEM.fill, SEM.accent, 2.2, 8, ' data-k="chip' + i + '" opacity="0"') +
@@ -212,7 +213,7 @@
       glows.push({ k: 'chip' + i, win: c[2], ri: 0.15, ro: 0.3 });
     });
 
-    sb = card('eng', 290, 450, 400, 270, STATE, '游戏引擎', 'Game Engine', '规则之内的状态演化', 'rule-based state',
+    sb = card('eng', 290, 450, 400, 270, STATE, '游戏引擎', 'Game Engine', '规则之内的状态演化', 'Rule-based state',
       { win: [[0.95, 3.1]] });
     // 俯视关卡图加三条状态量（level_map，k = 1.3）
     var mx0 = 312, my0 = sb + 22, K = 1.3;
@@ -231,37 +232,37 @@
     });
 
     s += arrow([[420, 360], [420, 450]], SEM.accent, SW2);
-    pill('p-reg', 420, 405, '注册', 'register', SEM, [[1.0, 1.5], [2.0, 2.5]]);
+    pill('p-reg', 420, 405, '修改', 'Register', SEM, [[1.0, 1.5], [2.0, 2.5]]);
     s += arrow([[560, 450], [560, 360]], STATE.accent, SW2);
-    pill('p-ret', 560, 405, '检索', 'retrieval', STATE, [[1.5, 2.0], [2.5, 3.0]]);
+    pill('p-ret', 560, 405, '检索', 'Retrieval', STATE, [[1.5, 2.0], [2.5, 3.0]]);
     dot('d-reg1', [[420, 360], [420, 450]], SEM.accent, [1.05, 1.45]);
     dot('d-ret1', [[560, 450], [560, 360]], STATE.accent, [1.55, 1.95]);
     dot('d-reg2', [[420, 360], [420, 450]], SEM.accent, [2.05, 2.45]);
     dot('d-ret2', [[560, 450], [560, 360]], STATE.accent, [2.55, 2.95]);
 
     // ---------- 输入 ----------
-    card('ins', 30, 210, 200, 120, NEUT, '用户指令', 'Instruction', '“让天下雨”', '“make it rain”', { ts: 28, win: [[0, 1.0]], ring: SUB });
+    card('ins', 30, 210, 200, 120, NEUT, '用户指令', 'Instruction', '“我要无敌模式”', '“Godmode”', { ts: 28, win: [[0, 1.0]], ring: SUB });
     s += arrow([[230, 270], [290, 270]], LINE, SW2);
-    card('ply', 30, 525, 200, 120, NEUT, '玩家', 'Player', 'WASD · 射击', 'WASD · shoot', { ts: 28, win: [[0.45, 1.45]], ring: SUB });
+    card('ply', 30, 525, 200, 120, NEUT, '玩家', 'Player', 'WASD · 射击', 'WASD · Shoot', { ts: 28, win: [[0.45, 1.45]], ring: SUB });
     s += arrow([[230, 585], [290, 585]], LINE, SW2);
     dot('d-ins', [[230, 270], [290, 270]], LINE, [0.3, 0.75]);
     dot('d-ply', [[230, 585], [290, 585]], LINE, [0.75, 1.2]);
 
     // ---------- 条件接口：颜色跟来源走 ----------
-    sb = card('pr', 770, 185, 340, 150, SEM, '语义条件', 'Semantic Prompts', 'VLM 按状态写 prompt', 'written from states',
+    sb = card('pr', 770, 185, 340, 150, SEM, '提示词', 'Semantic Prompts', '当前状态+用户意图', 'Current state & User preference',
       { win: [[2.95, 4.6]] });
     for (i = 0; i < 11; i++) s += rect(792 + i * 27, sb + 18, 23, 8, i % 2 === 0 ? SEM.stroke : '#D8D1DE', 0, 0, 0, ' data-k="st' + i + '"');
     s += arrow([[690, 260], [770, 260]], SEM.accent, SW1);
     dot('d-pr', [[690, 260], [770, 260]], SEM.accent, [2.75, 3.15]);
 
-    sb = card('ref', 770, 355, 340, 190, LOOK, '多参考帧', 'Reference Frames', '锚定角色、场景与画风', 'characters, scenes, style',
+    sb = card('ref', 770, 355, 340, 190, LOOK, '多参考帧', 'Reference Frames', '锚定角色、场景与画风', 'Characters, scenes, style',
       { win: [[3.3, 4.6]] });
     s += portrait(792, sb + 18, 90, 50) + landscape(892, sb + 18, 90, 50) + rich(992, sb + 18, 90, 50);
     [0, 1, 2].forEach(function (q) {
       ring('rt' + q, 792 + q * 100, sb + 18, 90, 50, LOOK.accent, [[3.45 + 0.3 * q, 3.95 + 0.3 * q]], 2.6, 1);
     });
 
-    sb = card('px', 770, 565, 340, 210, STATE, '低模代理画面', 'Low-poly Proxy', '逐帧稠密控制', 'dense, every frame',
+    sb = card('px', 770, 565, 340, 210, STATE, '低模代理画面', 'Low-poly Proxy', '逐帧稠密控制', 'Dense, every frame',
       { win: [[3.25, 4.6]] });
     stack('sp', 792, sb + 30, 120, 66, 8, lowpoly);
     s += arrow([[690, 670], [770, 670]], STATE.accent, SW1);
@@ -285,10 +286,10 @@
     s += arrow([[1480, 450], [1520, 450]], OURS.fill, SW1);
     dot('d-scr', [[1480, 450], [1520, 450]], OURS.fill, [6.05, 6.3]);
 
-    sb = card('scr', 1520, 340, 250, 220, NEUT, '画面', 'Screen', '3A 画质 · 480×864', 'AAA · 480×864', { win: [[6.25, 7.6]], ring: SUB });
+    sb = card('scr', 1520, 340, 250, 220, NEUT, '画面', 'Screen', '3A 画质 · 480×864', 'high quality · 480×864', { win: [[6.25, 7.6]], ring: SUB });
     stack('ss', 1542, sb + 24, 160, 88, 7, rich);
 
-    // 闭环：生成的新画面回到 VLM
+    // 闭环：生成的新画面回到 Coding Agent
     s += arrow([[1645, 340], [1645, 100], [740, 100], [740, 215], [690, 215]], SEM.accent, SW2);
     pill('p-new', 1200, 100, '新画面', 'new frames', SEM, [[7.35, 8.0]]);
     dot('d-new', [[1645, 340], [1645, 100], [740, 100], [740, 215], [690, 215]], SEM.accent, [6.8, 8.4]);
@@ -302,8 +303,8 @@
     s += '<clipPath id="' + P + 'kc"><rect x="1342" y="' + (SY - 4) + '" width="396" height="' + (Q + 8) + '"/></clipPath><g clip-path="url(#' + P + 'kc)">';
     for (i = 0; i < 21; i++) s += rect(1342 + i * 20, SY, Q, Q, i < 19 ? '#C7CDD2' : i === 19 ? '#4A545E' : '#DDE1E4', 0, 0, 0, ' data-k="kw' + i + '"');
     s += '</g>';
-    s += text2(1226, SY - 14, '记忆', 'memory', 20, SUB, 400, 'middle') + text2(1298, SY - 14, '参考帧', 'refs', 20, SUB, 400, 'middle') +
-      text2(1540, SY - 14, '最近 20 块', 'latest 20 chunks', 20, SUB, 400, 'middle', 396);
+    s += text2(1226, SY - 14, '记忆', 'Memory', 20, SUB, 400, 'middle') + text2(1298, SY - 14, '参考帧', 'Refs', 20, SUB, 400, 'middle') +
+      text2(1540, SY - 14, '最近 20 块', 'Latest 20 chunks', 20, SUB, 400, 'middle', 396);
     s += arrow([[1330, 578], [1330, 550]], LINE, SW2);
     dot('d-ctx', [[1330, 578], [1330, 550]], OURS.fill, [4.55, 4.95]);
 
@@ -330,7 +331,7 @@
     dot('d-pose', [[470, 720], [470, 835], [1180, 835]], STATE.accent, [7.0, 8.3], true);
 
     // 图例：两种语言的第一项字宽不同，虚线位置跟着字宽走
-    [['zh', '进入网络', '只用于检索', 220], ['en', 'into the network', 'retrieval only', 294.9]].forEach(function (c) {
+    [['zh', '进入网络', '只用于检索', 220], ['en', 'Into the network', 'Retrieval only', 295.2]].forEach(function (c) {
       s += '<g lang="' + c[0] + '">' + line(30, 960, 80, 960, LINE, SW2) + text(94, 967, c[1], 20, SUB, 400) +
         line(n(30 + c[3]), 960, n(80 + c[3]), 960, LINE, SW2, '11 8') + text(n(94 + c[3]), 967, c[2], 20, SUB, 400) + '</g>';
     });
