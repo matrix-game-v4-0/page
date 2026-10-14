@@ -44,7 +44,7 @@
 
   /* 首屏 */
   header.hero { padding: 72px 0 32px; text-align: center; }
-  .eyebrow { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: 2.4px; text-transform: uppercase; color: var(--mauve); background: var(--mauve-l); padding: 6px 12px; border-radius: 999px; }
+  .pname { font-size: clamp(30px, 4.4vw, 46px); font-weight: 800; letter-spacing: -.3px; line-height: 1.1; margin: 0; color: var(--slate); }
   h1 { font-size: clamp(32px, 5vw, 54px); line-height: 1.12; margin: 18px auto 14px; max-width: 860px; letter-spacing: -.5px; }
   h1 .grad { background: linear-gradient(90deg, var(--sage), var(--mauve), var(--rose), var(--sage)); background-size: 300% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: flow 9s linear infinite; }
   @keyframes flow { to { background-position: 300% 0; } }
@@ -73,16 +73,18 @@
   .compare .lab { position: absolute; top: 8px; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; color: #fff; background: rgba(51,56,61,.62); white-space: nowrap; }
   .compare .lab.l { left: 8px; } .compare .lab.r { right: 8px; }
 
-  /* 十六例网格 */
-  .gal { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px 14px; margin-top: 24px; }
+  /* 四个游戏各一例，2×2，结果一节的第一个小节 */
+  .gbox { margin-top: 24px; background: var(--panel); border: 1px solid var(--hair); border-radius: var(--radius); padding: 20px 22px; }
+  .gbox h3 { margin: 0 0 4px; font-size: 17px; }
+  .gal { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px 14px; margin-top: 16px; }
   .tile { margin: 0; }
   .tile figcaption { font-size: 13px; font-weight: 600; color: var(--ink); margin-top: 8px; }
 
-  /* 长时间游玩：每个游戏一整行，带声音 */
-  .longs { display: grid; gap: 30px; margin-top: 24px; }
+  /* 长时间游玩：三个游戏横向并排，带声音 */
+  .longs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px 14px; margin-top: 24px; }
   .longs .tile figcaption { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; }
   .longs .tile figcaption .dur { color: var(--sub); font-weight: 500; font-variant-numeric: tabular-nums; }
-  .compare .sound { top: auto; bottom: 12px; left: 12px; z-index: 2; pointer-events: auto; }
+  .compare .sound { top: auto; bottom: 10px; left: auto; right: 10px; z-index: 2; pointer-events: auto; }   /* 放右下角引擎低模一侧，不挡生成画面左下角的按键面板 */
 
   /* 数字 */
   .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 44px auto 0; max-width: 960px; }
@@ -163,10 +165,6 @@
   .kv .legend i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
 
   /* 结果 */
-  .video { position: relative; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--hair); background: #000; }
-  .video video { width: 100%; display: block; }
-  .vlabels { display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; font-size: 13px; font-weight: 700; color: var(--sub); margin: 18px 0 8px; }
-  .vlabels > span:nth-child(1) { color: var(--sage); } .vlabels > span:nth-child(2) { color: var(--slate); } .vlabels > span:nth-child(3) { color: var(--sub); }
   .ph { margin-top: 22px; padding: 22px; border-radius: var(--radius); border: 1px dashed #C9CDD1; display: grid; place-items: center; color: var(--sub); font-size: 13px; font-weight: 600;
         background: linear-gradient(100deg, #F4F5F7 30%, #FAFAFB 50%, #F4F5F7 70%); background-size: 220% 100%; animation: shimmer 2.6s ease-in-out infinite; }
   @keyframes shimmer { 0% { background-position: 120% 0; } 100% { background-position: -120% 0; } }
@@ -184,15 +182,13 @@
   .lightbox.on { display: block; }
   .lightbox img { display: block; width: min(1800px, 96vw); margin: 2vw auto; }
 
-  @media (max-width: 900px) {
-    .gal { grid-template-columns: repeat(2, 1fr); }
-  }
   @media (max-width: 760px) {
     .stats { grid-template-columns: repeat(2, 1fr); }
     .dp .top { grid-template-columns: 1fr; }
     .dp .col { position: static; }
     .dp .head { flex: none; max-height: 12em; }
     .dp .key { margin-left: 0; }
+    .longs { grid-template-columns: 1fr; }
     nav .links a { margin-left: 14px; }
   }
   @media (max-width: 640px) {
@@ -214,16 +210,16 @@
 <nav><div class="wrap">
   <span class="brand">Matrix-Game 4.0</span>
   <div class="right">
-    <span class="links"><a href="#overview"><span lang="en">Overview</span><span lang="zh">概览</span></a><a href="#method"><span lang="en">Method</span><span lang="zh">方法</span></a><a href="#results"><span lang="en">Results</span><span lang="zh">结果</span></a><a href="#longplay"><span lang="en">Long play</span><span lang="zh">长时间游玩</span></a><a href="#gallery"><span lang="en">Gallery</span><span lang="zh">示例</span></a><a href="#bibtex"><span lang="en">BibTeX</span><span lang="zh">引用</span></a></span>
+    <span class="links"><a href="#overview"><span lang="en">Overview</span><span lang="zh">概览</span></a><a href="#method"><span lang="en">Method</span><span lang="zh">方法</span></a><a href="#results"><span lang="en">Results</span><span lang="zh">结果</span></a><a href="#longplay"><span lang="en">Long play</span><span lang="zh">长时间游玩</span></a><a href="#bibtex"><span lang="en">BibTeX</span><span lang="zh">引用</span></a></span>
     <div class="lang" id="langsw"><button data-lang="zh">中文</button><button data-lang="en">English</button></div>
   </div>
 </div></nav>
 
 <header class="hero"><div class="wrap">
-  <span class="eyebrow"><span lang="en">Project page · preview</span><span lang="zh">项目主页 · 预览版</span></span>
+  <div class="pname">Matrix-Game 4.0</div>
   <h1><span lang="en">Code builds the game, <span class="grad">AI renders the world</span> in real time</span><span lang="zh">代码搭建游戏，<span class="grad">AI 实时渲染世界</span></span></h1>
   <p class="lead"><span lang="en">A game engine keeps the world state and draws a cheap low-poly proxy. A VLM decides whatever the rules cannot. A few-step causal video model turns every chunk into a finished frame on a single consumer GPU.</span><span lang="zh">游戏引擎维护世界状态，画出一份廉价的低模代理画面。规则决定不了的事交给 VLM。少步数的因果视频模型在一张消费级显卡上，把每个块渲染成成品画面。</span></p>
-  <div class="authors"><span lang="en">Authors to be announced</span><span lang="zh">作者名单稍后公布</span></div>
+  <div class="authors">Matrix-Game Team</div>
   <div class="btns">
     <span class="btn soon"><span lang="en">Paper</span><span lang="zh">论文</span> <span class="tag"><span lang="en">soon</span><span lang="zh">即将发布</span></span></span>
     <span class="btn soon"><span lang="en">Code</span><span lang="zh">代码</span> <span class="tag"><span lang="en">soon</span><span lang="zh">即将发布</span></span></span>
@@ -309,10 +305,10 @@
 
 <section id="results"><div class="wrap">
   <h2 class="reveal"><span class="k"><span lang="en">RESULTS</span><span lang="zh">结果</span></span><span lang="en">From proxy to picture</span><span lang="zh">从低模到画面</span></h2>
-  <p class="body reveal"><span lang="en">A held-out clip from the desert courtyard scene. The engine provides only the left column; the middle column is generated chunk by chunk; the right column is the ground-truth render for reference.</span><span lang="zh">沙漠庭院场景的一段留出评测片段。引擎只提供左列；中列逐块生成；右列是真值渲染，仅作参照。</span></p>
-  <div class="vlabels reveal"><span><span lang="en">Low-poly control</span><span lang="zh">低模控制</span></span><span><span lang="en">Ours</span><span lang="zh">生成画面</span></span><span><span lang="en">Ground truth</span><span lang="zh">真值</span></span></div>
-  <div class="video reveal">
-    <video src="assets/video/courtyard_clip.mp4" poster="assets/video/courtyard_clip_poster.jpg" autoplay muted loop playsinline preload="metadata"></video>
+  <div class="gbox reveal" id="gallery">
+    <h3><span lang="en">Four games, one clip each</span><span lang="zh">四个游戏，各一例</span></h3>
+    <div class="figcap" style="margin-top:0"><span lang="en">One held-out clip per game, 15 seconds each. Left of the divider is the generated frame, right of it is the engine's low-poly proxy. Drag the divider with a mouse or a finger. Both halves are cut from the same video frame, so they never drift apart.</span><span lang="zh">每个游戏取一段留出评测片段，每段 15 秒。分割线左侧是生成画面，右侧是引擎低模，用鼠标或手指拖动分割线即可对比。两半取自同一帧视频，始终逐帧同步。</span></div>
+    <div class="gal" id="gal"></div>
   </div>
 </div></section>
 
@@ -320,12 +316,6 @@
   <h2 class="reveal"><span class="k"><span lang="en">LONG PLAY</span><span lang="zh">长时间游玩</span></span><span lang="en">One uninterrupted session per game</span><span lang="zh">每个游戏一段不间断的游玩</span></h2>
   <p class="body reveal"><span lang="en">Three continuous sessions, 54 to 99 seconds each. Left of the divider is the generated frame, shown with the game HUD and the key inputs; right of it is the engine's low-poly proxy. Drag the divider to compare, and turn the sound on to hear the game audio.</span><span lang="zh">三个游戏各一段不间断的游玩，每段 54 到 99 秒。分割线左侧是生成画面，带游戏界面和当时的按键；右侧是引擎低模。拖动分割线对比，点「打开声音」可以听游戏音效。</span></p>
   <div class="longs" id="longs"></div>
-</div></section>
-
-<section id="gallery"><div class="wrap">
-  <h2 class="reveal"><span class="k"><span lang="en">GALLERY</span><span lang="zh">示例</span></span><span lang="en">Four games, sixteen clips</span><span lang="zh">四个游戏，十六个例子</span></h2>
-  <p class="body reveal"><span lang="en">Four held-out clips per game, 15 seconds each. Left of the divider is the generated frame, right of it is the engine's low-poly proxy. Drag the divider with a mouse or a finger. Both halves are cut from the same video frame, so they never drift apart.</span><span lang="zh">每个游戏取四段留出评测片段，每段 15 秒。分割线左侧是生成画面，右侧是引擎低模，用鼠标或手指拖动分割线即可对比。两半取自同一帧视频，始终逐帧同步。</span></p>
-  <div class="gal" id="gal"></div>
   <div class="ph reveal"><span><span lang="en">Coding-agent custom games · coming soon</span><span lang="zh">编码智能体定制的游戏 · 即将上线</span></span></div>
 </div></section>
 
@@ -333,7 +323,7 @@
   <h2><span class="k"><span lang="en">CITE</span><span lang="zh">引用</span></span>BibTeX</h2>
   <pre class="bib" id="bib"><button class="copy" id="copy"><span lang="en">Copy</span><span lang="zh">复制</span></button>@misc{matrixgame4,
   title  = {Matrix-Game 4.0},
-  author = {To be announced},
+  author = {Matrix-Game Team},
   year   = {2026},
   note   = {Project page preview}
 }</pre>
@@ -346,7 +336,7 @@
 <!-- 方法图动画组件：各自注册到 window.MG4Fig，缺了哪个就退回那张静态 PNG -->
 <script src="assets/js/fig_overview.js"></script>
 <script>
-// 十六例：每条视频左半是生成画面、右半是引擎低模（同一帧左右拼好）。每出一帧先整帧拷进缓冲画布，
+// 四例与长时间游玩：每条视频左半是生成画面、右半是引擎低模（同一帧左右拼好）。每出一帧先整帧拷进缓冲画布，
 // 再按分割线从缓冲里各取一半画到可见画布上，两边来自同一次拷贝，不会错帧。只播放看得见的格子。
 const GAMES = {
   castle: { en: 'Third-person shooter · Castle', zh: '第三人称射击 · 城堡' },
@@ -354,12 +344,11 @@ const GAMES = {
   racing: { en: 'Racing', zh: '赛车' },
   air: { en: 'Air combat', zh: '空战' }
 };
-const CLIPS = ['castle_01', 'castle_02', 'castle_04', 'castle_08', 'pyramid_01', 'pyramid_03', 'pyramid_06', 'pyramid_07',
-  'racing_06', 'racing_02', 'racing_03', 'racing_05', 'air_06', 'air_04', 'air_02', 'air_10'];
+const CLIPS = ['castle_04', 'pyramid_03', 'racing_03', 'air_06'];   // 原十六例里每个游戏挑一例（10-14 用户定 2×2），其余移出仓库
 const HW = 864, HH = 480, tiles = [], queue = [];
 const RVFC = 'requestVideoFrameCallback' in HTMLVideoElement.prototype;   // 支持的浏览器只在出新帧时拷贝，不支持的每次刷新都拷
 let loading = 0;
-// 桌面上十六格同时进入视野，一起下载会谁都起不来；最多同时下 4 条，先进入视野的先下
+// 几格同时进入视野时一起下载会谁都起不来；最多同时下 4 条，先进入视野的先下
 function pump() {
   while (loading < 4 && queue.length) {
     const t = queue.shift();
@@ -384,7 +373,7 @@ function setTilePos(t, e) {
   t.el.style.setProperty('--pos', t.pos * 100 + '%');
   t.dirty = true;
 }
-// 建一格对比：十六例与长时间游玩共用。sound 为真时加「打开声音」按钮，同一时刻只让一格出声
+// 建一格对比：四例与长时间游玩共用。sound 为真时加「打开声音」按钮，同一时刻只让一格出声
 const SND_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>';
 function makeTile(host, base, cap, opt = {}) {
   const f = document.createElement('figure'), pos = opt.pos || 0.5;
