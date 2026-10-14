@@ -87,7 +87,7 @@
   .compare .sound { top: auto; bottom: 10px; left: auto; right: 10px; z-index: 2; pointer-events: auto; }   /* 放右下角引擎低模一侧，不挡生成画面左下角的按键面板 */
 
   /* 数字 */
-  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 44px auto 0; max-width: 960px; }
+  .stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin: 44px auto 0; max-width: 1080px; }
   .stat { background: var(--panel); border: 1px solid var(--hair); border-radius: var(--radius); padding: 18px 16px; text-align: center; }
   .stat .num { font-size: 32px; font-weight: 800; color: var(--slate); font-variant-numeric: tabular-nums; }
   .stat .unit { font-size: 15px; font-weight: 700; color: var(--sub); margin-left: 3px; }
@@ -164,11 +164,6 @@
   .kv .legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--sub); }
   .kv .legend i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
 
-  /* 结果 */
-  .ph { margin-top: 22px; padding: 22px; border-radius: var(--radius); border: 1px dashed #C9CDD1; display: grid; place-items: center; color: var(--sub); font-size: 13px; font-weight: 600;
-        background: linear-gradient(100deg, #F4F5F7 30%, #FAFAFB 50%, #F4F5F7 70%); background-size: 220% 100%; animation: shimmer 2.6s ease-in-out infinite; }
-  @keyframes shimmer { 0% { background-position: 120% 0; } 100% { background-position: -120% 0; } }
-
   pre.bib { background: var(--panel); border: 1px solid var(--hair); border-radius: var(--radius); padding: 18px; font: 13px/1.6 var(--mono); color: #4A5056; overflow-x: auto; position: relative; }
   .copy { position: absolute; top: 12px; right: 12px; border: 1px solid var(--hair); background: #fff; border-radius: 8px; padding: 4px 10px; font: 600 12px var(--font); color: var(--sub); cursor: pointer; }
   footer { padding: 56px 0 40px; text-align: center; font-size: 13px; color: var(--sub); }
@@ -184,6 +179,7 @@
 
   @media (max-width: 760px) {
     .stats { grid-template-columns: repeat(2, 1fr); }
+    .stat:last-child { grid-column: span 2; }
     .dp .top { grid-template-columns: 1fr; }
     .dp .col { position: static; }
     .dp .head { flex: none; max-height: 12em; }
@@ -223,7 +219,6 @@
   <div class="btns">
     <span class="btn soon"><span lang="en">Paper</span><span lang="zh">论文</span> <span class="tag"><span lang="en">soon</span><span lang="zh">即将发布</span></span></span>
     <span class="btn soon"><span lang="en">Code</span><span lang="zh">代码</span> <span class="tag"><span lang="en">soon</span><span lang="zh">即将发布</span></span></span>
-    <span class="btn soon"><span lang="en">Playable demo</span><span lang="zh">可玩演示</span> <span class="tag"><span lang="en">soon</span><span lang="zh">即将发布</span></span></span>
   </div>
 
   <div class="teaser reveal">
@@ -233,8 +228,9 @@
   <div class="cap"><span lang="en">Overview video. It starts muted; use the button or the player controls to turn the sound on.</span><span lang="zh">总视频，默认静音播放，点左上角按钮或播放器控件即可打开声音。</span></div>
 
   <div class="stats">
-    <div class="stat reveal"><div><span class="num" data-to="83">0</span><span class="unit">FPS</span></div><div class="desc"><span lang="en">1-step generation, RTX 5090</span><span lang="zh">单步生成，RTX 5090</span></div></div>
-    <div class="stat reveal"><div><span class="num" data-to="80">0</span><span class="unit">ms</span></div><div class="desc"><span lang="en">key press to first reacting frame</span><span lang="zh">从按键到第一帧响应</span></div></div>
+    <div class="stat reveal"><div><span class="num" data-to="83">0</span><span class="unit">FPS</span></div><div class="desc"><span lang="en">1-step denoising, RTX&nbsp;5090</span><span lang="zh">单步去噪，RTX 5090</span></div></div>
+    <div class="stat reveal"><div><span class="num" data-to="112">0</span><span class="unit">ms</span></div><div class="desc"><span lang="en">key press to first reacting frame</span><span lang="zh">从按键到第一帧响应</span></div></div>
+    <div class="stat reveal"><div><span class="num" data-to="48">0</span><span class="unit">ms</span></div><div class="desc"><span lang="en">to denoise one chunk<br>(1 latent frame, 4&nbsp;frames)</span><span lang="zh">去噪生成一个块<br>（1 个 latent 帧，4 帧）</span></div></div>
     <div class="stat reveal"><div><span class="num" data-to="480">0</span><span class="unit">p</span></div><div class="desc"><span lang="en">streaming output</span><span lang="zh">流式输出</span></div></div>
     <div class="stat reveal"><div><span class="num" data-to="1">0</span><span class="unit">GPU</span></div><div class="desc"><span lang="en">text encoder, DiT and VAE resident</span><span lang="zh">文本编码器、DiT 与 VAE 同驻一张卡</span></div></div>
   </div>
@@ -316,7 +312,6 @@
   <h2 class="reveal"><span class="k"><span lang="en">LONG PLAY</span><span lang="zh">长时间游玩</span></span><span lang="en">One uninterrupted session per game</span><span lang="zh">每个游戏一段不间断的游玩</span></h2>
   <p class="body reveal"><span lang="en">Three continuous sessions, 54 to 99 seconds each. Left of the divider is the generated frame, shown with the game HUD and the key inputs; right of it is the engine's low-poly proxy. Drag the divider to compare, and turn the sound on to hear the game audio.</span><span lang="zh">三个游戏各一段不间断的游玩，每段 54 到 99 秒。分割线左侧是生成画面，带游戏界面和当时的按键；右侧是引擎低模。拖动分割线对比，点「打开声音」可以听游戏音效。</span></p>
   <div class="longs" id="longs"></div>
-  <div class="ph reveal"><span><span lang="en">Coding-agent custom games · coming soon</span><span lang="zh">编码智能体定制的游戏 · 即将上线</span></span></div>
 </div></section>
 
 <section id="bibtex"><div class="wrap reveal">
