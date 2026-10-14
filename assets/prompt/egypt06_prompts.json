@@ -1,0 +1,1114 @@
+[
+ {
+  "seg": 0,
+  "t0": 0.0,
+  "t1": 3.375,
+  "f0": 0,
+  "f1": 80,
+  "head_en": [
+   [
+    "t",
+    "Daytime ancient Egyptian desert city, clear sky. Center: "
+   ],
+   [
+    "t",
+    "player-controlled bear-costume character with round ears, holding a rifle, seen from behind in third person, in the left foreground, "
+   ],
+   [
+    "ego",
+    "carrying a shield, hit 0 times, 0 enemies defeated"
+   ],
+   [
+    "t",
+    ". Around: "
+   ],
+   [
+    "dim",
+    "enemy in a yellow hazmat suit with a helmet and gas mask at center, enemy in a black balaclava at center, sandstone archway at top-left, tall shaded stone wall at right."
+   ]
+  ],
+  "head_zh": [
+   [
+    "t",
+    "白天的古埃及沙漠城市，晴空。画面中央："
+   ],
+   [
+    "t",
+    "玩家操控的熊玩偶装角色，圆耳朵，手持步枪，第三人称背后视角，在左侧前景，"
+   ],
+   [
+    "ego",
+    "带盾牌，中弹 0 次，已击败 0 个敌人"
+   ],
+   [
+    "t",
+    "。周围："
+   ],
+   [
+    "dim",
+    "身穿黄色防化服、戴头盔和防毒面具的敌人（中间）；戴黑色头套的蒙面敌人（中间）；砂岩拱门（左上）；背阴的高石墙（右侧）。"
+   ]
+  ],
+  "events": [
+   [
+    [
+     "hit",
+     "a pistol round hits the hazmat enemy",
+     "手枪子弹命中防化服敌人"
+    ],
+    [
+     "enemy",
+     "the hazmat enemy fires a pistol",
+     "防化服敌人用手枪开火"
+    ]
+   ],
+   [
+    [
+     "player",
+     "the player drops the shield",
+     "玩家扔下盾牌"
+    ],
+    [
+     "enemy",
+     "the hazmat enemy fires a pistol",
+     "防化服敌人用手枪开火"
+    ]
+   ],
+   [
+    [
+     "hit",
+     "a rifle round hits the hazmat enemy",
+     "步枪子弹命中防化服敌人"
+    ],
+    [
+     "hit",
+     "an explosion bursts at center",
+     "中间发生爆炸"
+    ],
+    [
+     "defeat",
+     "the hazmat enemy is defeated",
+     "防化服敌人被击败"
+    ]
+   ],
+   [
+    [
+     "still",
+     "the scene stays largely unchanged",
+     "画面基本不变"
+    ]
+   ]
+  ]
+ },
+ {
+  "seg": 1,
+  "t0": 3.375,
+  "t1": 6.708,
+  "f0": 81,
+  "f1": 160,
+  "head_en": [
+   [
+    "t",
+    "Daytime ancient Egyptian desert city, clear sky. Center: "
+   ],
+   [
+    "t",
+    "player-controlled bear-costume character with round ears, holding a rifle, seen from behind in third person, in the left foreground, "
+   ],
+   [
+    "ego",
+    "no shield, hit 0 times, 1 enemy defeated"
+   ],
+   [
+    "t",
+    ". Around: "
+   ],
+   [
+    "dim",
+    "green glowing shield pad at center, enemy in a yellow hazmat suit with a helmet and gas mask at bottom, tall shaded stone wall at left, sandstone building with carved reliefs at far top, tall stone wall at right, snowy mountains at far top-right."
+   ]
+  ],
+  "head_zh": [
+   [
+    "t",
+    "白天的古埃及沙漠城市，晴空。画面中央："
+   ],
+   [
+    "t",
+    "玩家操控的熊玩偶装角色，圆耳朵，手持步枪，第三人称背后视角，在左侧前景，"
+   ],
+   [
+    "ego",
+    "没有盾牌，中弹 0 次，已击败 1 个敌人"
+   ],
+   [
+    "t",
+    "。周围："
+   ],
+   [
+    "dim",
+    "发绿光的盾牌补给台（中间）；身穿黄色防化服、戴头盔和防毒面具的敌人（下方）；背阴的高石墙（左侧）；带浮雕的砂岩建筑（远处上方）；高石墙（右侧）；雪山（远处右上）。"
+   ]
+  ],
+  "events": [
+   [
+    [
+     "still",
+     "the scene stays largely unchanged",
+     "画面基本不变"
+    ]
+   ],
+   [
+    [
+     "exit",
+     "the hazmat enemy leaves view at bottom",
+     "防化服敌人从下方离开画面"
+    ],
+    [
+     "player",
+     "the player dashes",
+     "玩家冲刺"
+    ]
+   ],
+   [
+    [
+     "enter",
+     "the hazmat enemy enters view at right",
+     "防化服敌人从右侧进入画面"
+    ],
+    [
+     "enemy",
+     "the masked enemy fires a pistol",
+     "蒙面敌人用手枪开火"
+    ]
+   ],
+   [
+    [
+     "enemy",
+     "the robot enemy fires a pistol",
+     "机器人敌人用手枪开火"
+    ]
+   ]
+  ]
+ },
+ {
+  "seg": 2,
+  "t0": 6.708,
+  "t1": 10.042,
+  "f0": 161,
+  "f1": 240,
+  "head_en": [
+   [
+    "t",
+    "Daytime ancient Egyptian desert city, clear sky. Center: "
+   ],
+   [
+    "t",
+    "player-controlled bear-costume character with round ears, holding a rifle, seen from behind in third person, in the left foreground, "
+   ],
+   [
+    "ego",
+    "no shield, hit 0 times, 1 enemy defeated"
+   ],
+   [
+    "t",
+    ". Around: "
+   ],
+   [
+    "dim",
+    "enemy in a yellow hazmat suit with a helmet and gas mask at center, multi-story sandstone building at top, tall stone wall at right, snowy mountains at far top-right, palm trees at far right."
+   ]
+  ],
+  "head_zh": [
+   [
+    "t",
+    "白天的古埃及沙漠城市，晴空。画面中央："
+   ],
+   [
+    "t",
+    "玩家操控的熊玩偶装角色，圆耳朵，手持步枪，第三人称背后视角，在左侧前景，"
+   ],
+   [
+    "ego",
+    "没有盾牌，中弹 0 次，已击败 1 个敌人"
+   ],
+   [
+    "t",
+    "。周围："
+   ],
+   [
+    "dim",
+    "身穿黄色防化服、戴头盔和防毒面具的敌人（中间）；多层砂岩建筑（上方）；高石墙（右侧）；雪山（远处右上）；棕榈树（远处右侧）。"
+   ]
+  ],
+  "events": [
+   [
+    [
+     "enemy",
+     "the robot enemy fires a pistol",
+     "机器人敌人用手枪开火"
+    ]
+   ],
+   [
+    [
+     "player",
+     "the player fires the rifle",
+     "玩家用步枪开火"
+    ],
+    [
+     "enemy",
+     "the robot enemy fires a pistol",
+     "机器人敌人用手枪开火"
+    ]
+   ],
+   [
+    [
+     "enemy",
+     "the masked enemy fires a pistol",
+     "蒙面敌人用手枪开火"
+    ]
+   ],
+   [
+    [
+     "enemy",
+     "the robot enemy fires a pistol",
+     "机器人敌人用手枪开火"
+    ],
+    [
+     "enemy",
+     "the robot enemy dashes",
+     "机器人敌人冲刺"
+    ]
+   ]
+  ]
+ },
+ {
+  "seg": 3,
+  "t0": 10.042,
+  "t1": 13.375,
+  "f0": 241,
+  "f1": 320,
+  "head_en": [
+   [
+    "t",
+    "Daytime ancient Egyptian desert city, clear sky. Center: "
+   ],
+   [
+    "t",
+    "player-controlled bear-costume character with round ears, holding a rifle, seen from behind in third person, in the left foreground, "
+   ],
+   [
+    "ego",
+    "no shield, hit 0 times, 1 enemy defeated"
+   ],
+   [
+    "t",
+    ". Around: "
+   ],
+   [
+    "dim",
+    "blue robot enemy with antenna horns and orange trim at center, green glowing shield pad at center, enemy in a black balaclava at far center, multi-story sandstone building at top, tall stone wall at right, snowy mountains at far top-right, palm trees at far right."
+   ]
+  ],
+  "head_zh": [
+   [
+    "t",
+    "白天的古埃及沙漠城市，晴空。画面中央："
+   ],
+   [
+    "t",
+    "玩家操控的熊玩偶装角色，圆耳朵，手持步枪，第三人称背后视角，在左侧前景，"
+   ],
+   [
+    "ego",
+    "没有盾牌，中弹 0 次，已击败 1 个敌人"
+   ],
+   [
+    "t",
+    "。周围："
+   ],
+   [
+    "dim",
+    "带天线角、橙色饰边的蓝色机器人敌人（中间）；发绿光的盾牌补给台（中间）；戴黑色头套的蒙面敌人（远处中间）；多层砂岩建筑（上方）；高石墙（右侧）；雪山（远处右上）；棕榈树（远处右侧）。"
+   ]
+  ],
+  "events": [
+   [
+    [
+     "exit",
+     "the hazmat enemy leaves view at center",
+     "防化服敌人从中间离开画面"
+    ]
+   ],
+   [
+    [
+     "enemy",
+     "the masked enemy fires a pistol",
+     "蒙面敌人用手枪开火"
+    ],
+    [
+     "enemy",
+     "the robot enemy fires a pistol",
+     "机器人敌人用手枪开火"
+    ]
+   ],
+   [
+    [
+     "hit",
+     "the player is hit by a bullet",
+     "玩家中弹"
+    ]
+   ],
+   [
+    [
+     "player",
+     "the player fires the rifle",
+     "玩家用步枪开火"
+    ],
+    [
+     "hit",
+     "an explosion bursts at center",
+     "中间发生爆炸"
+    ],
+    [
+     "defeat",
+     "the robot enemy is defeated",
+     "机器人敌人被击败"
+    ]
+   ]
+  ]
+ },
+ {
+  "seg": 4,
+  "t0": 13.375,
+  "t1": 16.708,
+  "f0": 321,
+  "f1": 400,
+  "head_en": [
+   [
+    "t",
+    "Daytime ancient Egyptian desert city, clear sky. Center: "
+   ],
+   [
+    "t",
+    "player-controlled bear-costume character with round ears, holding a rifle, seen from behind in third person, in the left foreground, "
+   ],
+   [
+    "ego",
+    "no shield, hit 1 time, 2 enemies defeated"
+   ],
+   [
+    "t",
+    ". Around: "
+   ],
+   [
+    "dim",
+    "green glowing shield pad at center, blue robot enemy with antenna horns and orange trim at center, enemy in a black balaclava at far center, sandstone building with arched doorways at top, tall stone wall at right, snowy mountains at far top-right, palm trees at top-right."
+   ]
+  ],
+  "head_zh": [
+   [
+    "t",
+    "白天的古埃及沙漠城市，晴空。画面中央："
+   ],
+   [
+    "t",
+    "玩家操控的熊玩偶装角色，圆耳朵，手持步枪，第三人称背后视角，在左侧前景，"
+   ],
+   [
+    "ego",
+    "没有盾牌，中弹 1 次，已击败 2 个敌人"
+   ],
+   [
+    "t",
+    "。周围："
+   ],
+   [
+    "dim",
+    "发绿光的盾牌补给台（中间）；带天线角、橙色饰边的蓝色机器人敌人（中间）；戴黑色头套的蒙面敌人（远处中间）；带拱门的砂岩建筑（上方）；高石墙（右侧）；雪山（远处右上）；棕榈树（右上）。"
+   ]
+  ],
+  "events": [
+   [
+    [
+     "player",
+     "the player lands",
+     "玩家落地"
+    ]
+   ],
+   [
+    [
+     "enemy",
+     "the masked enemy fires a pistol",
+     "蒙面敌人用手枪开火"
+    ],
+    [
+     "enemy",
+     "the masked enemy dashes",
+     "蒙面敌人冲刺"
+    ]
+   ],
+   [
+    [
+     "still",
+     "the scene stays largely unchanged",
+     "画面基本不变"
+    ]
+   ],
+   [
+    [
+     "enemy",
+     "the masked enemy fires a pistol",
+     "蒙面敌人用手枪开火"
+    ],
+    [
+     "hit",
+     "the player is hit by a bullet",
+     "玩家中弹"
+    ]
+   ]
+  ]
+ },
+ {
+  "seg": 5,
+  "t0": 16.708,
+  "t1": 20.042,
+  "f0": 401,
+  "f1": 480,
+  "head_en": [
+   [
+    "t",
+    "Daytime ancient Egyptian desert city, clear sky. Center: "
+   ],
+   [
+    "t",
+    "player-controlled bear-costume character with round ears, holding a rifle, seen from behind in third person, in the left foreground, "
+   ],
+   [
+    "ego",
+    "no shield, hit 2 times, 2 enemies defeated"
+   ],
+   [
+    "t",
+    ". Around: "
+   ],
+   [
+    "dim",
+    "enemy in a black balaclava at center, blue robot enemy with antenna horns and orange trim at center, green glowing shield pad at center, sandstone building with carved reliefs at top-left, tall stone wall at right, snowy mountains at far top-right."
+   ]
+  ],
+  "head_zh": [
+   [
+    "t",
+    "白天的古埃及沙漠城市，晴空。画面中央："
+   ],
+   [
+    "t",
+    "玩家操控的熊玩偶装角色，圆耳朵，手持步枪，第三人称背后视角，在左侧前景，"
+   ],
+   [
+    "ego",
+    "没有盾牌，中弹 2 次，已击败 2 个敌人"
+   ],
+   [
+    "t",
+    "。周围："
+   ],
+   [
+    "dim",
+    "戴黑色头套的蒙面敌人（中间）；带天线角、橙色饰边的蓝色机器人敌人（中间）；发绿光的盾牌补给台（中间）；带浮雕的砂岩建筑（左上）；高石墙（右侧）；雪山（远处右上）。"
+   ]
+  ],
+  "events": [
+   [
+    [
+     "still",
+     "the scene stays largely unchanged",
+     "画面基本不变"
+    ]
+   ],
+   [
+    [
+     "hit",
+     "a rifle round hits the masked enemy",
+     "步枪子弹命中蒙面敌人"
+    ],
+    [
+     "hit",
+     "an explosion bursts at center",
+     "中间发生爆炸"
+    ],
+    [
+     "defeat",
+     "the masked enemy is defeated",
+     "蒙面敌人被击败"
+    ]
+   ],
+   [
+    [
+     "hit",
+     "the player is hit by a bullet",
+     "玩家中弹"
+    ]
+   ],
+   [
+    [
+     "still",
+     "the scene stays largely unchanged",
+     "画面基本不变"
+    ]
+   ]
+  ]
+ },
+ {
+  "seg": 6,
+  "t0": 20.042,
+  "t1": 23.375,
+  "f0": 481,
+  "f1": 560,
+  "head_en": [
+   [
+    "t",
+    "Daytime ancient Egyptian desert city, clear sky. Center: "
+   ],
+   [
+    "t",
+    "player-controlled bear-costume character with round ears, holding a rifle, seen from behind in third person, in the left foreground, "
+   ],
+   [
+    "ego",
+    "no shield, hit 3 times, 3 enemies defeated"
+   ],
+   [
+    "t",
+    ". Around: "
+   ],
+   [
+    "dim",
+    "two blue robot enemies with antenna horns and orange trim, two at center, enemy in a black balaclava at center, green glowing shield pad at center, sandstone buildings with carved reliefs at top-left, tall stone wall at right, snowy mountains at far top-right."
+   ]
+  ],
+  "head_zh": [
+   [
+    "t",
+    "白天的古埃及沙漠城市，晴空。画面中央："
+   ],
+   [
+    "t",
+    "玩家操控的熊玩偶装角色，圆耳朵，手持步枪，第三人称背后视角，在左侧前景，"
+   ],
+   [
+    "ego",
+    "没有盾牌，中弹 3 次，已击败 3 个敌人"
+   ],
+   [
+    "t",
+    "。周围："
+   ],
+   [
+    "dim",
+    "两个带天线角、橙色饰边的蓝色机器人敌人（都在中间）；戴黑色头套的蒙面敌人（中间）；发绿光的盾牌补给台（中间）；带浮雕的砂岩建筑（左上）；高石墙（右侧）；雪山（远处右上）。"
+   ]
+  ],
+  "events": [
+   [
+    [
+     "player",
+     "the player dashes",
+     "玩家冲刺"
+    ]
+   ],
+   [
+    [
+     "still",
+     "the scene stays largely unchanged",
+     "画面基本不变"
+    ]
+   ],
+   [
+    [
+     "enemy",
+     "the soldier enemy fires a pistol",
+     "士兵敌人用手枪开火"
+    ],
+    [
+     "enter",
+     "the soldier enemy enters view at center",
+     "士兵敌人从中间进入画面"
+    ],
+    [
+     "exit",
+     "the masked enemy leaves view at center",
+     "蒙面敌人从中间离开画面"
+    ]
+   ],
+   [
+    [
+     "still",
+     "the scene stays largely unchanged",
+     "画面基本不变"
+    ]
+   ]
+  ]
+ },
+ {
+  "seg": 7,
+  "t0": 23.375,
+  "t1": 26.708,
+  "f0": 561,
+  "f1": 640,
+  "head_en": [
+   [
+    "t",
+    "Daytime ancient Egyptian desert city, clear sky. Center: "
+   ],
+   [
+    "t",
+    "player-controlled bear-costume character with round ears, holding a rifle, seen from behind in third person, in the left foreground, "
+   ],
+   [
+    "ego",
+    "no shield, hit 3 times, 3 enemies defeated"
+   ],
+   [
+    "t",
+    ". Around: "
+   ],
+   [
+    "dim",
+    "soldier enemy in a green army helmet at center, blue robot enemy with antenna horns and orange trim at far center, sandstone building at top-left, tall stone wall at right, wooden lamp post at left."
+   ]
+  ],
+  "head_zh": [
+   [
+    "t",
+    "白天的古埃及沙漠城市，晴空。画面中央："
+   ],
+   [
+    "t",
+    "玩家操控的熊玩偶装角色，圆耳朵，手持步枪，第三人称背后视角，在左侧前景，"
+   ],
+   [
+    "ego",
+    "没有盾牌，中弹 3 次，已击败 3 个敌人"
+   ],
+   [
+    "t",
+    "。周围："
+   ],
+   [
+    "dim",
+    "戴绿色军盔的士兵敌人（中间）；带天线角、橙色饰边的蓝色机器人敌人（远处中间）；砂岩建筑（左上）；高石墙（右侧）；木灯柱（左侧）。"
+   ]
+  ],
+  "events": [
+   [
+    [
+     "enemy",
+     "the soldier enemy fires a pistol",
+     "士兵敌人用手枪开火"
+    ]
+   ],
+   [
+    [
+     "enemy",
+     "the robot enemy fires a pistol",
+     "机器人敌人用手枪开火"
+    ]
+   ],
+   [
+    [
+     "exit",
+     "the soldier enemy leaves view at left",
+     "士兵敌人从左侧离开画面"
+    ],
+    [
+     "exit",
+     "the robot enemy leaves view at top-right",
+     "机器人敌人从右上离开画面"
+    ]
+   ],
+   [
+    [
+     "hit",
+     "the player is hit by a bullet",
+     "玩家中弹"
+    ]
+   ]
+  ]
+ },
+ {
+  "seg": 8,
+  "t0": 26.708,
+  "t1": 30.042,
+  "f0": 641,
+  "f1": 720,
+  "head_en": [
+   [
+    "t",
+    "Daytime ancient Egyptian desert city, clear sky. Center: "
+   ],
+   [
+    "t",
+    "player-controlled bear-costume character with round ears, holding a rifle, seen from behind in third person, large in the foreground, "
+   ],
+   [
+    "ego",
+    "no shield, hit 4 times, 3 enemies defeated"
+   ],
+   [
+    "t",
+    ". Around: "
+   ],
+   [
+    "dim",
+    "open sandstone square at center, arched sandstone building at top, palm trees at top-right, stone columns at right."
+   ]
+  ],
+  "head_zh": [
+   [
+    "t",
+    "白天的古埃及沙漠城市，晴空。画面中央："
+   ],
+   [
+    "t",
+    "玩家操控的熊玩偶装角色，圆耳朵，手持步枪，第三人称背后视角，在前景中较大，"
+   ],
+   [
+    "ego",
+    "没有盾牌，中弹 4 次，已击败 3 个敌人"
+   ],
+   [
+    "t",
+    "。周围："
+   ],
+   [
+    "dim",
+    "开阔的砂岩广场（中间）；带拱门的砂岩建筑（上方）；棕榈树（右上）；石柱（右侧）。"
+   ]
+  ],
+  "events": [
+   [
+    [
+     "still",
+     "the scene stays largely unchanged",
+     "画面基本不变"
+    ]
+   ],
+   [
+    [
+     "player",
+     "the player fires the rifle",
+     "玩家用步枪开火"
+    ],
+    [
+     "enter",
+     "the soldier enemy enters view at right",
+     "士兵敌人从右侧进入画面"
+    ],
+    [
+     "enter",
+     "the robot enemy enters view at center",
+     "机器人敌人从中间进入画面"
+    ]
+   ],
+   [
+    [
+     "still",
+     "the scene stays largely unchanged",
+     "画面基本不变"
+    ]
+   ],
+   [
+    [
+     "exit",
+     "the robot enemy leaves view at center",
+     "机器人敌人从中间离开画面"
+    ],
+    [
+     "enemy",
+     "the soldier enemy fires a pistol",
+     "士兵敌人用手枪开火"
+    ]
+   ]
+  ]
+ },
+ {
+  "seg": 9,
+  "t0": 30.042,
+  "t1": 33.375,
+  "f0": 721,
+  "f1": 800,
+  "head_en": [
+   [
+    "t",
+    "Daytime ancient Egyptian desert city, clear sky. Center: "
+   ],
+   [
+    "t",
+    "player-controlled bear-costume character with round ears, holding a rifle, seen from behind in third person, filling most of the frame as the camera closes in, "
+   ],
+   [
+    "ego",
+    "no shield, hit 4 times, 3 enemies defeated"
+   ],
+   [
+    "t",
+    ". Around: "
+   ],
+   [
+    "dim",
+    "stone columns at left, arched sandstone building at top, palm tree at top-right."
+   ]
+  ],
+  "head_zh": [
+   [
+    "t",
+    "白天的古埃及沙漠城市，晴空。画面中央："
+   ],
+   [
+    "t",
+    "玩家操控的熊玩偶装角色，圆耳朵，手持步枪，第三人称背后视角，镜头贴近，几乎占满画面，"
+   ],
+   [
+    "ego",
+    "没有盾牌，中弹 4 次，已击败 3 个敌人"
+   ],
+   [
+    "t",
+    "。周围："
+   ],
+   [
+    "dim",
+    "石柱（左侧）；带拱门的砂岩建筑（上方）；棕榈树（右上）。"
+   ]
+  ],
+  "events": [
+   [
+    [
+     "exit",
+     "the soldier enemy leaves view at right",
+     "士兵敌人从右侧离开画面"
+    ]
+   ],
+   [
+    [
+     "still",
+     "the scene stays largely unchanged",
+     "画面基本不变"
+    ]
+   ],
+   [
+    [
+     "player",
+     "the player jumps",
+     "玩家跳起"
+    ],
+    [
+     "enemy",
+     "the robot enemy dashes",
+     "机器人敌人冲刺"
+    ],
+    [
+     "enter",
+     "the soldier enemy enters view at center",
+     "士兵敌人从中间进入画面"
+    ]
+   ],
+   [
+    [
+     "player",
+     "the player lands",
+     "玩家落地"
+    ],
+    [
+     "defeat",
+     "the robot enemy is defeated",
+     "机器人敌人被击败"
+    ],
+    [
+     "player",
+     "the player fires the rifle",
+     "玩家用步枪开火"
+    ]
+   ]
+  ]
+ },
+ {
+  "seg": 10,
+  "t0": 33.375,
+  "t1": 36.708,
+  "f0": 801,
+  "f1": 880,
+  "head_en": [
+   [
+    "t",
+    "Daytime ancient Egyptian desert city, clear sky. Center: "
+   ],
+   [
+    "t",
+    "player-controlled bear-costume character with round ears, holding a rifle, seen from behind in third person, in the left foreground, "
+   ],
+   [
+    "ego",
+    "no shield, hit 4 times, 4 enemies defeated"
+   ],
+   [
+    "t",
+    ". Around: "
+   ],
+   [
+    "dim",
+    "blue robot enemy with antenna horns and orange trim at left, soldier enemy in a green army helmet at center, green glowing shield pad at left, sandstone buildings with carved reliefs and arched windows at top, stone columns at right, wooden lamp posts at center, rocky mountain at far top-left."
+   ]
+  ],
+  "head_zh": [
+   [
+    "t",
+    "白天的古埃及沙漠城市，晴空。画面中央："
+   ],
+   [
+    "t",
+    "玩家操控的熊玩偶装角色，圆耳朵，手持步枪，第三人称背后视角，在左侧前景，"
+   ],
+   [
+    "ego",
+    "没有盾牌，中弹 4 次，已击败 4 个敌人"
+   ],
+   [
+    "t",
+    "。周围："
+   ],
+   [
+    "dim",
+    "带天线角、橙色饰边的蓝色机器人敌人（左侧）；戴绿色军盔的士兵敌人（中间）；发绿光的盾牌补给台（左侧）；带浮雕和拱窗的砂岩建筑（上方）；石柱（右侧）；木灯柱（中间）；石山（远处左上）。"
+   ]
+  ],
+  "events": [
+   [
+    [
+     "hit",
+     "an explosion bursts at center",
+     "中间发生爆炸"
+    ],
+    [
+     "enemy",
+     "the soldier enemy fires a pistol",
+     "士兵敌人用手枪开火"
+    ]
+   ],
+   [
+    [
+     "enemy",
+     "the soldier enemy fires a pistol",
+     "士兵敌人用手枪开火"
+    ]
+   ],
+   [
+    [
+     "exit",
+     "the robot enemy leaves view at left",
+     "机器人敌人从左侧离开画面"
+    ]
+   ],
+   [
+    [
+     "enemy",
+     "the soldier enemy fires a pistol",
+     "士兵敌人用手枪开火"
+    ]
+   ]
+  ]
+ },
+ {
+  "seg": 11,
+  "t0": 36.708,
+  "t1": 40.042,
+  "f0": 881,
+  "f1": 960,
+  "head_en": [
+   [
+    "t",
+    "Daytime ancient Egyptian desert city, clear sky. Center: "
+   ],
+   [
+    "t",
+    "player-controlled bear-costume character with round ears, holding a rifle, seen from behind in third person, filling most of the frame as the camera closes in, "
+   ],
+   [
+    "ego",
+    "no shield, hit 4 times, 4 enemies defeated"
+   ],
+   [
+    "t",
+    ". Around: "
+   ],
+   [
+    "dim",
+    "soldier enemy in a green army helmet at right, palm trees at top-left, tall obelisk at far top, sandstone building with carved reliefs at right."
+   ]
+  ],
+  "head_zh": [
+   [
+    "t",
+    "白天的古埃及沙漠城市，晴空。画面中央："
+   ],
+   [
+    "t",
+    "玩家操控的熊玩偶装角色，圆耳朵，手持步枪，第三人称背后视角，镜头贴近，几乎占满画面，"
+   ],
+   [
+    "ego",
+    "没有盾牌，中弹 4 次，已击败 4 个敌人"
+   ],
+   [
+    "t",
+    "。周围："
+   ],
+   [
+    "dim",
+    "戴绿色军盔的士兵敌人（右侧）；棕榈树（左上）；高耸的方尖碑（远处上方）；带浮雕的砂岩建筑（右侧）。"
+   ]
+  ],
+  "events": [
+   [
+    [
+     "enemy",
+     "the soldier enemy fires a pistol",
+     "士兵敌人用手枪开火"
+    ],
+    [
+     "enemy",
+     "the soldier enemy jumps",
+     "士兵敌人跳起"
+    ],
+    [
+     "player",
+     "the player dashes",
+     "玩家冲刺"
+    ]
+   ],
+   [
+    [
+     "still",
+     "the scene stays largely unchanged",
+     "画面基本不变"
+    ]
+   ],
+   [
+    [
+     "still",
+     "the scene stays largely unchanged",
+     "画面基本不变"
+    ]
+   ],
+   [
+    [
+     "player",
+     "the player fires the rifle",
+     "玩家用步枪开火"
+    ]
+   ]
+  ]
+ }
+]

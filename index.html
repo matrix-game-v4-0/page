@@ -132,16 +132,16 @@
   .dp .col.flash { border-color: var(--mauve); box-shadow: 0 0 0 3px var(--mauve-l); }
   .dp .col h4 { margin: 0 0 4px; font-size: 12px; font-weight: 700; letter-spacing: 1px; color: var(--mauve); text-transform: uppercase; }
   .dp .sub { font-size: 11.5px; font-weight: 700; color: var(--sub); margin: 8px 0 3px; }
-  .dp .head { flex: 1 1 0; min-height: 4.7em; font-size: 12.5px; line-height: 1.55; color: var(--ink); overflow-y: auto; padding-right: 4px;
+  .dp .head { flex: 1 1 0; min-height: 3.1em; font-size: 12.5px; line-height: 1.55; color: var(--ink); overflow-y: auto; padding-right: 4px;
                -webkit-mask-image: linear-gradient(#000 calc(100% - 1.4em), transparent); mask-image: linear-gradient(#000 calc(100% - 1.4em), transparent); }
   .dp .head .dim { color: #858B91; }
   .dp .head .egoh { background: var(--sand-l); color: #7A6748; font-weight: 700; border-radius: 4px; padding: 0 3px; }
-  .dp .ev { flex: 0 1 auto; overflow-y: auto; list-style: none; margin: 0; padding: 0; font-size: 12.5px; line-height: 1.5; }
+  .dp .ev { flex: 0 0 auto; overflow-y: auto; list-style: none; margin: 0; padding: 0; font-size: 12.5px; line-height: 1.5; }
   .dp .ev li { padding: 2px 0 2px 9px; border-left: 2px solid var(--hair); margin-bottom: 3px; opacity: 0; transform: translateX(6px); transition: opacity .35s, transform .35s; }
   .dp .ev li.in { opacity: 1; transform: none; }
-  .dp .c-hit { color: var(--rose); font-weight: 700; }
-  .dp .c-light-red { color: #B5524C; font-weight: 600; } .dp .c-light-yellow { color: #A27F22; font-weight: 600; } .dp .c-light-green { color: #5F7A52; font-weight: 600; }
-  .dp .c-enter { color: var(--slate); } .dp .c-exit { color: var(--sub); } .dp .c-still { color: var(--sub); font-style: italic; }
+  .dp .c-player { color: var(--slate); font-weight: 600; } .dp .c-enemy { color: #7D6A92; }
+  .dp .c-hit { color: var(--rose); font-weight: 700; } .dp .c-defeat { color: #A8423C; font-weight: 700; }
+  .dp .c-enter, .dp .c-exit { color: #5F7A52; } .dp .c-still { color: var(--sub); font-style: italic; }
 
   /* 滚动 KV 缓存动画 */
   .kv { margin-top: 36px; background: var(--panel); border: 1px solid var(--hair); border-radius: var(--radius); padding: 20px 22px; }
@@ -263,24 +263,26 @@
 
   <div class="dp reveal" id="dp">
     <h3><span lang="en">Dynamic prompts</span><span lang="zh">动态 prompt</span></h3>
-    <div class="figcap" style="margin-top:0"><span lang="en">The harness rewrites the prompt as the game state changes. In this 40-second racing run the prompt is replaced every 80 frames (12 segments): a scene summary with the ego car's speed and state, the objects around it, and the events of that segment. The prompt panel shows the exact text fed to the model for the segment being played.</span><span lang="zh">Harness 随游戏状态逐段改写 prompt。这段 40 秒的赛车推理每 80 帧换一次 prompt，共 12 段，每段包括场景总述（自车速度与状态、周围物体）和这一段里发生的事件。prompt 栏显示正在播放那一段的 prompt；模型实际输入是英文，这里是中文对照，切到 English 可看原文。</span></div>
+    <div class="figcap" style="margin-top:0"><span lang="en">The harness writes the prompt from the engine state, one segment at a time. For this 40-second held-out pyramid run it reads the objects in view and the game events every 80 frames (12 segments): a scene summary with the player's state, the enemies and landmarks around, and the events of that segment. The prompt panel shows what the harness writes for the segment being played.</span><span lang="zh">Harness 按引擎状态逐段写 prompt。这段 40 秒的金字塔留出例每 80 帧读一次画面里的物体和游戏事件，共 12 段，每段包括场景总述（玩家状态、周围的敌人和建筑）和这一段里发生的事件。prompt 栏显示 Harness 为正在播放的那一段写出的 prompt；原文是英文，这里是中文对照，切到 English 可看原文。</span></div>
     <div class="bar">
       <div class="segno"><span lang="en">Prompt segment</span><span lang="zh">当前 prompt 段</span><b id="dpno">1 / 12</b><span id="dpfr"></span></div>
       <span class="chip" id="dpego"></span>
       <div class="key">
-        <span><i style="background:var(--rose)"></i><span lang="en">collision</span><span lang="zh">碰撞</span></span>
-        <span><i style="background:#A27F22"></i><span lang="en">traffic light</span><span lang="zh">红绿灯</span></span>
-        <span><i style="background:var(--slate)"></i><span lang="en">enters / exits view</span><span lang="zh">进入 / 离开画面</span></span>
-        <span><i style="background:var(--sand)"></i><span lang="en">ego speed and state</span><span lang="zh">自车速度与状态</span></span>
+        <span><i style="background:var(--slate)"></i><span lang="en">player action</span><span lang="zh">玩家动作</span></span>
+        <span><i style="background:#7D6A92"></i><span lang="en">enemy action</span><span lang="zh">敌人动作</span></span>
+        <span><i style="background:var(--rose)"></i><span lang="en">hit / explosion</span><span lang="zh">命中与爆炸</span></span>
+        <span><i style="background:#A8423C"></i><span lang="en">enemy defeated</span><span lang="zh">击败敌人</span></span>
+        <span><i style="background:#5F7A52"></i><span lang="en">enters / exits view</span><span lang="zh">进入 / 离开画面</span></span>
+        <span><i style="background:var(--sand)"></i><span lang="en">player state</span><span lang="zh">玩家状态</span></span>
       </div>
     </div>
     <div class="top">
       <div>
-        <video id="dpv" src="assets/prompt/racing02.mp4" poster="assets/prompt/racing02.jpg" muted loop playsinline preload="none"></video>
+        <video id="dpv" src="assets/prompt/egypt06.mp4" poster="assets/prompt/egypt06.jpg" muted loop playsinline preload="none"></video>
         <div class="segs" id="dpsegs"></div>
       </div>
       <div class="pw">
-        <div class="col" id="dpen" lang="en"><h4>Prompt · model input</h4>
+        <div class="col" id="dpen" lang="en"><h4>Prompt · written by the harness</h4>
           <div class="sub">Scene summary</div><div class="head"></div>
           <div class="sub">Events in this segment</div><ul class="ev"></ul></div>
         <div class="col" id="dpzh" lang="zh"><h4>Prompt · 中文对照</h4>
@@ -531,7 +533,7 @@ setLang(lang, false);
 
 // 动态 prompt：按视频当前时间找到所在的 prompt 段，换段时右侧一栏闪框、事件逐句出现；点进度条上的段可跳到那一段。
 // 英文、中文两栏都渲染，各带 lang 属性，由语言 CSS 只显示当前语言那一栏，切语言不用重画。
-// 数据 assets/prompt/racing02_prompts.json 由 translate.py 生成：英文与模型输入逐字一致，中文按固定对照表翻译
+// 数据 assets/prompt/egypt06_prompts.json 由 teaser_1013/web_prompt/egypt/gen.py 按引擎记录（可见物体、事件）逐段写出，中英文出自同一份结构化结果
 (function () {
   const v = document.getElementById('dpv'), box = document.getElementById('dp'), segsEl = document.getElementById('dpsegs');
   const cols = { en: document.getElementById('dpen'), zh: document.getElementById('dpzh') };
@@ -567,7 +569,7 @@ setLang(lang, false);
     }
     requestAnimationFrame(tick);
   })();
-  fetch('assets/prompt/racing02_prompts.json').then((r) => r.json()).then((j) => {
+  fetch('assets/prompt/egypt06_prompts.json').then((r) => r.json()).then((j) => {
     data = j;
     segsEl.innerHTML = data.map((d, i) => `<button type="button" aria-label="segment ${i + 1}"><i></i></button>`).join('');
     [...segsEl.children].forEach((b, i) => b.onclick = () => { v.currentTime = data[i].t0 + 0.01; v.play().catch(() => {}); });
