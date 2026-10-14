@@ -1,0 +1,1128 @@
+[
+ {
+  "seg": 0,
+  "t0": 0.0,
+  "t1": 3.375,
+  "f0": 0,
+  "f1": 80,
+  "head_en": [
+   [
+    "t",
+    "Daytime city, cloudy sky. Center: "
+   ],
+   [
+    "t",
+    "player-controlled passenger minivan with a rounded front, sliding side doors and a rear hatch, large in foreground, "
+   ],
+   [
+    "ego",
+    "~15 km/h, damaged"
+   ],
+   [
+    "t",
+    ". Around: "
+   ],
+   [
+    "dim",
+    "boxy five-door suv at bottom-left, light gray high-rise building at far top-right, silver-gray building at far top-left, light gray guardrail at bottom-left, thick birch tree with a light-colored trunk and multiple forked branches forming a broad crown, dense fine twigs, and sparse leaves at right, gray street lamp at top-left, two off-white trees, one at bottom-left and one at bottom, narrow-crowned birch tree with a light slender trunk and multiple upward branches, sparse leaves at bottom-left, light gray tree at bottom, two off-white trees, two at bottom, two gray traffic lights, one at bottom-left and one at far left."
+   ]
+  ],
+  "head_zh": [
+   [
+    "t",
+    "白天的城市，多云。画面中央："
+   ],
+   [
+    "t",
+    "玩家操控的乘用厢式车，圆润车头、侧滑门、后掀尾门，在前景中较大，"
+   ],
+   [
+    "ego",
+    "约 15 km/h，已受损"
+   ],
+   [
+    "t",
+    "。周围："
+   ],
+   [
+    "dim",
+    "方正的五门 SUV（左下）；浅灰色高层建筑（远处右上）；银灰色建筑（远处左上）；浅灰色护栏（左下）；粗壮白桦，浅色树干分出多根枝杈，形成宽阔树冠，细枝密集，叶子稀疏（右侧）；灰色路灯（左上）；两棵米白色的树（左下、下方）；窄冠白桦，浅色细长树干，多根枝条向上伸展，叶子稀疏（左下）；浅灰色的树（下方）；两棵米白色的树（都在下方）；两个灰色红绿灯（左下、远处左侧）。"
+   ]
+  ],
+  "events": [
+   [
+    [
+     "light-yellow",
+     "the traffic light turns yellow",
+     "红绿灯变为黄灯"
+    ],
+    [
+     "enter",
+     "off-white building enters at top-left",
+     "米白色建筑从左上进入画面"
+    ],
+    [
+     "enter",
+     "two dark reddish-brown buildings enter at top-left and top-left",
+     "两座深红棕色建筑从左上进入画面"
+    ]
+   ],
+   [
+    [
+     "enter",
+     "off-white high-rise building enters at top-left",
+     "米白色高层建筑从左上进入画面"
+    ],
+    [
+     "enter",
+     "gray traffic light enters at bottom-right",
+     "灰色红绿灯从右下进入画面"
+    ]
+   ],
+   [
+    [
+     "hit",
+     "the ego vehicle collides",
+     "自车发生碰撞"
+    ],
+    [
+     "enter",
+     "two black high-rise buildings enter at top-left and top-left",
+     "两座黑色高层建筑从左上进入画面"
+    ],
+    [
+     "enter",
+     "two trees enter at left and bottom-left",
+     "两棵树从左侧、左下进入画面"
+    ]
+   ],
+   [
+    [
+     "enter",
+     "dark reddish-brown building enters at top-right",
+     "深红棕色建筑从右上进入画面"
+    ],
+    [
+     "enter",
+     "full-size four-door sedan enters at bottom-right",
+     "全尺寸四门轿车从右下进入画面"
+    ]
+   ]
+  ]
+ },
+ {
+  "seg": 1,
+  "t0": 3.375,
+  "t1": 6.708,
+  "f0": 81,
+  "f1": 160,
+  "head_en": [
+   [
+    "t",
+    "Daytime city, cloudy sky. Center: "
+   ],
+   [
+    "t",
+    "player-controlled passenger minivan with a rounded front, sliding side doors and a rear hatch, dominating foreground, "
+   ],
+   [
+    "ego",
+    "~15 km/h, damaged"
+   ],
+   [
+    "t",
+    ". Around: "
+   ],
+   [
+    "dim",
+    "off-white building at top-left, light gray guardrail at bottom-right, grayish-brown traditional multi-story building with vertical and arched windows with decorative frames above a dark reddish-brown base facade and clear horizontal divisions at far top-right, off-white high-rise building at far top-left, dark gray and reddish-brown multi-story building with vertical wall piers and tall narrow windows below, and a reddish-brown brick facade with arched decorations and a wide top cornice above at far top-right, dark gray building at far top-right, grayish-brown traditional multi-story building with vertical and arched windows with decorative frames above a dark reddish-brown base facade and clear horizontal divisions at far top-right, tree at bottom-left, reddish-brown brick multi-story building with rows of vertical windows, light window frames and horizontal belt courses, a dark red lower wall, and a protruding decorative top cornice at far right, gray traffic light at bottom-right, off-white tree at bottom-left, gray building at far top-right, full-size four-door sedan at bottom-right."
+   ]
+  ],
+  "head_zh": [
+   [
+    "t",
+    "白天的城市，多云。画面中央："
+   ],
+   [
+    "t",
+    "玩家操控的乘用厢式车，圆润车头、侧滑门、后掀尾门，占据前景主体，"
+   ],
+   [
+    "ego",
+    "约 15 km/h，已受损"
+   ],
+   [
+    "t",
+    "。周围："
+   ],
+   [
+    "dim",
+    "米白色建筑（左上）；浅灰色护栏（右下）；灰褐色传统多层建筑，深红棕色基座立面之上是带装饰框的竖窗和拱窗，水平分层清晰（远处右上）；米白色高层建筑（远处左上）；深灰与红棕色多层建筑，下部是竖向壁柱和高窄窗，上部是带拱形装饰的红棕砖墙和宽檐口（远处右上）；深灰色建筑（远处右上）；灰褐色传统多层建筑，深红棕色基座立面之上是带装饰框的竖窗和拱窗，水平分层清晰（远处右上）；树（左下）；红棕色砖砌多层建筑，成排竖窗配浅色窗框和横向腰线，下部是深红色墙面，顶部有突出的装饰檐口（远处右侧）；灰色红绿灯（右下）；米白色的树（左下）；灰色建筑（远处右上）；全尺寸四门轿车（右下）。"
+   ]
+  ],
+  "events": [
+   [
+    [
+     "light-green",
+     "the traffic light turns green",
+     "红绿灯变为绿灯"
+    ],
+    [
+     "enter",
+     "silver-gray building enters at top-right",
+     "银灰色建筑从右上进入画面"
+    ]
+   ],
+   [
+    [
+     "enter",
+     "two trees enter at right and right",
+     "两棵树从右侧进入画面"
+    ]
+   ],
+   [
+    [
+     "hit",
+     "the ego vehicle collides",
+     "自车发生碰撞"
+    ],
+    [
+     "light-red",
+     "the traffic light turns red",
+     "红绿灯变为红灯"
+    ],
+    [
+     "enter",
+     "light gray high-rise building enters at top-right",
+     "浅灰色高层建筑从右上进入画面"
+    ]
+   ],
+   [
+    [
+     "enter",
+     "gray traffic light enters at left",
+     "灰色红绿灯从左侧进入画面"
+    ]
+   ]
+  ]
+ },
+ {
+  "seg": 2,
+  "t0": 6.708,
+  "t1": 10.042,
+  "f0": 161,
+  "f1": 240,
+  "head_en": [
+   [
+    "t",
+    "Daytime city, cloudy sky. Center: "
+   ],
+   [
+    "t",
+    "player-controlled passenger minivan with a rounded front, sliding side doors and a rear hatch, dominating foreground, "
+   ],
+   [
+    "ego",
+    "~10 km/h, damaged"
+   ],
+   [
+    "t",
+    ". Around: "
+   ],
+   [
+    "dim",
+    "silver-gray building at far top-left, light gray guardrail at bottom, light gray high-rise building at far top-right, two off-white trees, two at right, birch tree with a rounded crown, a light-colored trunk branching into dense fine twigs, a broad canopy, and sparse leaves at center, gray traffic light at left, dense-crowned birch tree with a gray-white trunk and nearly circular crown of dense thin branches, very few leaves at right, narrow-crowned birch tree with a light slender trunk and multiple upward branches, sparse leaves at center, dark green kiosk at right, three street lamps, one at right, one at left and one at center, four-door pickup truck at left, light gray tree at left, gray paving at bottom-right, two full-size four-door sedans, two at center, rusty brown bollard at bottom."
+   ]
+  ],
+  "head_zh": [
+   [
+    "t",
+    "白天的城市，多云。画面中央："
+   ],
+   [
+    "t",
+    "玩家操控的乘用厢式车，圆润车头、侧滑门、后掀尾门，占据前景主体，"
+   ],
+   [
+    "ego",
+    "约 10 km/h，已受损"
+   ],
+   [
+    "t",
+    "。周围："
+   ],
+   [
+    "dim",
+    "银灰色建筑（远处左上）；浅灰色护栏（下方）；浅灰色高层建筑（远处右上）；两棵米白色的树（都在右侧）；圆冠白桦，浅色树干分出细密枝条，树冠宽阔，叶子稀疏（中间）；灰色红绿灯（左侧）；密冠白桦，灰白树干，细枝密集成近圆形树冠，叶子很少（右侧）；窄冠白桦，浅色细长树干，多根枝条向上伸展，叶子稀疏（中间）；深绿色报亭（右侧）；三盏路灯（右侧、左侧、中间）；四门皮卡（左侧）；浅灰色的树（左侧）；灰色铺装路面（右下）；两辆全尺寸四门轿车（都在中间）；锈褐色路桩（下方）。"
+   ]
+  ],
+  "events": [
+   [
+    [
+     "enter",
+     "two dark reddish-brown buildings enter at top-left and top-left",
+     "两座深红棕色建筑从左上进入画面"
+    ],
+    [
+     "enter",
+     "reddish-brown building enters at top-left",
+     "红棕色建筑从左上进入画面"
+    ]
+   ],
+   [
+    [
+     "hit",
+     "the ego vehicle collides",
+     "自车发生碰撞"
+    ],
+    [
+     "light-yellow",
+     "the traffic light turns yellow",
+     "红绿灯变为黄灯"
+    ],
+    [
+     "enter",
+     "green sign enters at right",
+     "绿色标牌从右侧进入画面"
+    ]
+   ],
+   [
+    [
+     "exit",
+     "dark reddish-brown building exits at top-left",
+     "深红棕色建筑从左上离开画面"
+    ]
+   ],
+   [
+    [
+     "enter",
+     "dark reddish-brown building enters at top-left",
+     "深红棕色建筑从左上进入画面"
+    ]
+   ]
+  ]
+ },
+ {
+  "seg": 3,
+  "t0": 10.042,
+  "t1": 13.375,
+  "f0": 241,
+  "f1": 320,
+  "head_en": [
+   [
+    "t",
+    "Daytime city, cloudy sky. Center: "
+   ],
+   [
+    "t",
+    "player-controlled passenger minivan with a rounded front, sliding side doors and a rear hatch, dominating foreground, "
+   ],
+   [
+    "ego",
+    "~15 km/h, damaged"
+   ],
+   [
+    "t",
+    ". Around: "
+   ],
+   [
+    "dim",
+    "silver-gray building at top-right, light gray guardrail at bottom-right, gray traffic light at right, grayish-brown traditional multi-story building with vertical and arched windows with decorative frames above a dark reddish-brown base facade and clear horizontal divisions at top-left, dark gray building at top-left, dark gray and reddish-brown multi-story building with vertical wall piers and tall narrow windows below, and a reddish-brown brick facade with arched decorations and a wide top cornice above at far top-left, grayish-brown traditional multi-story building with vertical and arched windows with decorative frames above a dark reddish-brown base facade and clear horizontal divisions at far top-left, reddish-brown brick multi-story building with rows of vertical windows, light window frames and horizontal belt courses, a dark red lower wall, and a protruding decorative top cornice at far top-left, four-door pickup truck at right, boxy five-door suv at left, street lamp at right, full-size four-door sedan at bottom-left, rusty brown bollard at bottom-right."
+   ]
+  ],
+  "head_zh": [
+   [
+    "t",
+    "白天的城市，多云。画面中央："
+   ],
+   [
+    "t",
+    "玩家操控的乘用厢式车，圆润车头、侧滑门、后掀尾门，占据前景主体，"
+   ],
+   [
+    "ego",
+    "约 15 km/h，已受损"
+   ],
+   [
+    "t",
+    "。周围："
+   ],
+   [
+    "dim",
+    "银灰色建筑（右上）；浅灰色护栏（右下）；灰色红绿灯（右侧）；灰褐色传统多层建筑，深红棕色基座立面之上是带装饰框的竖窗和拱窗，水平分层清晰（左上）；深灰色建筑（左上）；深灰与红棕色多层建筑，下部是竖向壁柱和高窄窗，上部是带拱形装饰的红棕砖墙和宽檐口（远处左上）；灰褐色传统多层建筑，深红棕色基座立面之上是带装饰框的竖窗和拱窗，水平分层清晰（远处左上）；红棕色砖砌多层建筑，成排竖窗配浅色窗框和横向腰线，下部是深红色墙面，顶部有突出的装饰檐口（远处左上）；四门皮卡（右侧）；方正的五门 SUV（左侧）；路灯（右侧）；全尺寸四门轿车（左下）；锈褐色路桩（右下）。"
+   ]
+  ],
+  "events": [
+   [
+    [
+     "exit",
+     "light gray guardrail exits at bottom-right",
+     "浅灰色护栏从右下离开画面"
+    ]
+   ],
+   [
+    [
+     "light-yellow",
+     "the traffic light turns yellow",
+     "红绿灯变为黄灯"
+    ],
+    [
+     "enter",
+     "light gray high-rise building enters at top-right",
+     "浅灰色高层建筑从右上进入画面"
+    ]
+   ],
+   [
+    [
+     "hit",
+     "the ego vehicle collides",
+     "自车发生碰撞"
+    ],
+    [
+     "light-red",
+     "the traffic light turns red",
+     "红绿灯变为红灯"
+    ]
+   ]
+  ]
+ },
+ {
+  "seg": 4,
+  "t0": 13.375,
+  "t1": 16.708,
+  "f0": 321,
+  "f1": 400,
+  "head_en": [
+   [
+    "t",
+    "Daytime city, cloudy sky. Center: "
+   ],
+   [
+    "t",
+    "player-controlled passenger minivan with a rounded front, sliding side doors and a rear hatch, dominating foreground, "
+   ],
+   [
+    "ego",
+    "~5 km/h, damaged"
+   ],
+   [
+    "t",
+    ". Around: "
+   ],
+   [
+    "dim",
+    "silver-gray building at top, boxy five-door suv at bottom-right, four street lamps, one at left and three at right, light gray tree at left, two four-door pickup trucks, one at bottom-right and one at right, green trash can at bottom-left, full-size four-door sedan at right, green sign at bottom, light gray railing at far right, rusty brown bollard at bottom-left."
+   ]
+  ],
+  "head_zh": [
+   [
+    "t",
+    "白天的城市，多云。画面中央："
+   ],
+   [
+    "t",
+    "玩家操控的乘用厢式车，圆润车头、侧滑门、后掀尾门，占据前景主体，"
+   ],
+   [
+    "ego",
+    "约 5 km/h，已受损"
+   ],
+   [
+    "t",
+    "。周围："
+   ],
+   [
+    "dim",
+    "银灰色建筑（上方）；方正的五门 SUV（右下）；四盏路灯（一盏在左侧、三盏在右侧）；浅灰色的树（左侧）；两辆四门皮卡（右下、右侧）；绿色垃圾桶（左下）；全尺寸四门轿车（右侧）；绿色标牌（下方）；浅灰色栏杆（远处右侧）；锈褐色路桩（左下）。"
+   ]
+  ],
+  "events": [
+   [
+    [
+     "hit",
+     "the ego vehicle collides",
+     "自车发生碰撞"
+    ],
+    [
+     "enter",
+     "dark reddish-brown building enters at top-left",
+     "深红棕色建筑从左上进入画面"
+    ],
+    [
+     "enter",
+     "dark gray building enters at top-left",
+     "深灰色建筑从左上进入画面"
+    ]
+   ],
+   [
+    [
+     "light-green",
+     "the traffic light turns green",
+     "红绿灯变为绿灯"
+    ]
+   ],
+   [
+    [
+     "still",
+     "the scene stays largely unchanged",
+     "画面基本不变"
+    ]
+   ],
+   [
+    [
+     "still",
+     "the scene stays largely unchanged",
+     "画面基本不变"
+    ]
+   ]
+  ]
+ },
+ {
+  "seg": 5,
+  "t0": 16.708,
+  "t1": 20.042,
+  "f0": 401,
+  "f1": 480,
+  "head_en": [
+   [
+    "t",
+    "Daytime city, cloudy sky. Center: "
+   ],
+   [
+    "t",
+    "player-controlled passenger minivan with a rounded front, sliding side doors and a rear hatch, dominating foreground, "
+   ],
+   [
+    "ego",
+    "~10 km/h, damaged"
+   ],
+   [
+    "t",
+    ". Around: "
+   ],
+   [
+    "dim",
+    "silver-gray building at top-right, boxy five-door suv at bottom-right, dark reddish-brown building at far top-left, dark gray and reddish-brown multi-story building with vertical wall piers and tall narrow windows below, and a reddish-brown brick facade with arched decorations and a wide top cornice above at far top-left, reddish-brown brick multi-story building with rows of vertical windows, light window frames and horizontal belt courses, a dark red lower wall, and a protruding decorative top cornice at far top-left, four-door pickup truck at bottom-right, dark vintage single head street lamp with a decorative finial on the post and a light colored lantern hanging from a short side arm at center, dark green utility cabinet at bottom-left, gray building at far top-left, light gray tree at left, green trash can at bottom-left, rusty brown bollard at bottom-left, green sign at bottom-right, two street lamps, two at left, gray construction debris at left, dark green trash can at bottom-left."
+   ]
+  ],
+  "head_zh": [
+   [
+    "t",
+    "白天的城市，多云。画面中央："
+   ],
+   [
+    "t",
+    "玩家操控的乘用厢式车，圆润车头、侧滑门、后掀尾门，占据前景主体，"
+   ],
+   [
+    "ego",
+    "约 10 km/h，已受损"
+   ],
+   [
+    "t",
+    "。周围："
+   ],
+   [
+    "dim",
+    "银灰色建筑（右上）；方正的五门 SUV（右下）；深红棕色建筑（远处左上）；深灰与红棕色多层建筑，下部是竖向壁柱和高窄窗，上部是带拱形装饰的红棕砖墙和宽檐口（远处左上）；红棕色砖砌多层建筑，成排竖窗配浅色窗框和横向腰线，下部是深红色墙面，顶部有突出的装饰檐口（远处左上）；四门皮卡（右下）；深色复古单头路灯，灯柱顶端有装饰尖顶，短侧臂下挂一盏浅色灯笼（中间）；深绿色设备箱（左下）；灰色建筑（远处左上）；浅灰色的树（左侧）；绿色垃圾桶（左下）；锈褐色路桩（左下）；绿色标牌（右下）；两盏路灯（都在左侧）；灰色建筑废料（左侧）；深绿色垃圾桶（左下）。"
+   ]
+  ],
+  "events": [
+   [
+    [
+     "hit",
+     "the ego vehicle collides",
+     "自车发生碰撞"
+    ],
+    [
+     "light-green",
+     "the traffic light turns green",
+     "红绿灯变为绿灯"
+    ],
+    [
+     "enter",
+     "dark gray building enters at top-left",
+     "深灰色建筑从左上进入画面"
+    ]
+   ],
+   [
+    [
+     "light-red",
+     "the traffic light turns red",
+     "红绿灯变为红灯"
+    ],
+    [
+     "enter",
+     "dark reddish-brown building enters at top-left",
+     "深红棕色建筑从左上进入画面"
+    ]
+   ],
+   [
+    [
+     "light-green",
+     "the traffic light turns green",
+     "红绿灯变为绿灯"
+    ],
+    [
+     "enter",
+     "two dark gray buildings enter at top-left and top-left",
+     "两座深灰色建筑从左上进入画面"
+    ]
+   ],
+   [
+    [
+     "enter",
+     "off-white building enters at top-left",
+     "米白色建筑从左上进入画面"
+    ]
+   ]
+  ]
+ },
+ {
+  "seg": 6,
+  "t0": 20.042,
+  "t1": 23.375,
+  "f0": 481,
+  "f1": 560,
+  "head_en": [
+   [
+    "t",
+    "Daytime city, cloudy sky. Center: "
+   ],
+   [
+    "t",
+    "player-controlled passenger minivan with a rounded front, sliding side doors and a rear hatch, dominating foreground, "
+   ],
+   [
+    "ego",
+    "~15 km/h, damaged"
+   ],
+   [
+    "t",
+    ". Around: "
+   ],
+   [
+    "dim",
+    "off-white building at top-left, dark reddish-brown building at top-right, grayish-brown classical multi-story building with light decorative window frames and continuous horizontal moldings between vertical window columns, a dark gray ground-floor storefront, and a wide black top cornice at top-right, two gray traffic lights, one at right and one at left, off-white high-rise building at far top-left, street lamp at right, light gray guardrail at bottom-left, reddish-brown high-rise building at far top-left, green newspaper box at right, multi-story building with different upper and lower styles, a dark gray stone base with tall arched windows and vertical stone columns, and a black grid glass curtain wall with horizontal window bands above at far top, grayish-brown classical multi-story building with light decorative window frames and continuous horizontal moldings between vertical window columns, a dark gray ground-floor storefront, and a wide black top cornice at far top-right."
+   ]
+  ],
+  "head_zh": [
+   [
+    "t",
+    "白天的城市，多云。画面中央："
+   ],
+   [
+    "t",
+    "玩家操控的乘用厢式车，圆润车头、侧滑门、后掀尾门，占据前景主体，"
+   ],
+   [
+    "ego",
+    "约 15 km/h，已受损"
+   ],
+   [
+    "t",
+    "。周围："
+   ],
+   [
+    "dim",
+    "米白色建筑（左上）；深红棕色建筑（右上）；灰褐色古典多层建筑，浅色装饰窗框，竖向窗列之间有连续的横向线脚，底层是深灰色店面，顶部是宽大的黑色檐口（右上）；两个灰色红绿灯（右侧、左侧）；米白色高层建筑（远处左上）；路灯（右侧）；浅灰色护栏（左下）；红棕色高层建筑（远处左上）；绿色报箱（右侧）；上下风格不同的多层建筑，下部是带高拱窗和竖向石柱的深灰色石材基座，上部是带横向窗带的黑色网格玻璃幕墙（远处上方）；灰褐色古典多层建筑，浅色装饰窗框，竖向窗列之间有连续的横向线脚，底层是深灰色店面，顶部是宽大的黑色檐口（远处右上）。"
+   ]
+  ],
+  "events": [
+   [
+    [
+     "enter",
+     "dark reddish-brown building enters at top-right",
+     "深红棕色建筑从右上进入画面"
+    ]
+   ],
+   [
+    [
+     "hit",
+     "the ego vehicle collides",
+     "自车发生碰撞"
+    ],
+    [
+     "enter",
+     "compact station wagon enters at right",
+     "紧凑型旅行车从右侧进入画面"
+    ]
+   ],
+   [
+    [
+     "light-red",
+     "the traffic light turns red",
+     "红绿灯变为红灯"
+    ],
+    [
+     "enter",
+     "street lamp enters at left",
+     "路灯从左侧进入画面"
+    ]
+   ]
+  ]
+ },
+ {
+  "seg": 7,
+  "t0": 23.375,
+  "t1": 26.708,
+  "f0": 561,
+  "f1": 640,
+  "head_en": [
+   [
+    "t",
+    "Daytime city, cloudy sky. Center: "
+   ],
+   [
+    "t",
+    "player-controlled passenger minivan with a rounded front, sliding side doors and a rear hatch, dominating foreground, "
+   ],
+   [
+    "ego",
+    "~5 km/h, damaged"
+   ],
+   [
+    "t",
+    ". Around: "
+   ],
+   [
+    "dim",
+    "grayish-brown traditional multi-story building with vertical and arched windows with decorative frames above a dark reddish-brown base facade and clear horizontal divisions at top-left, grayish-brown classical multi-story building with light decorative window frames and continuous horizontal moldings between vertical window columns, a dark gray ground-floor storefront, and a wide black top cornice at top, gray traffic light at left, green newspaper box at bottom-right, street lamp at right, grayish-brown traditional multi-story building with vertical and arched windows with decorative frames above a dark reddish-brown base facade and clear horizontal divisions at top-right, off-white high-rise building at far top-left, light gray building at far top-left, grayish-brown classical multi-story building with light decorative window frames and continuous horizontal moldings between vertical window columns, a dark gray ground-floor storefront, and a wide black top cornice at top-left."
+   ]
+  ],
+  "head_zh": [
+   [
+    "t",
+    "白天的城市，多云。画面中央："
+   ],
+   [
+    "t",
+    "玩家操控的乘用厢式车，圆润车头、侧滑门、后掀尾门，占据前景主体，"
+   ],
+   [
+    "ego",
+    "约 5 km/h，已受损"
+   ],
+   [
+    "t",
+    "。周围："
+   ],
+   [
+    "dim",
+    "灰褐色传统多层建筑，深红棕色基座立面之上是带装饰框的竖窗和拱窗，水平分层清晰（左上）；灰褐色古典多层建筑，浅色装饰窗框，竖向窗列之间有连续的横向线脚，底层是深灰色店面，顶部是宽大的黑色檐口（上方）；灰色红绿灯（左侧）；绿色报箱（右下）；路灯（右侧）；灰褐色传统多层建筑，深红棕色基座立面之上是带装饰框的竖窗和拱窗，水平分层清晰（右上）；米白色高层建筑（远处左上）；浅灰色建筑（远处左上）；灰褐色古典多层建筑，浅色装饰窗框，竖向窗列之间有连续的横向线脚，底层是深灰色店面，顶部是宽大的黑色檐口（左上）。"
+   ]
+  ],
+  "events": [
+   [
+    [
+     "light-red",
+     "the traffic light turns red",
+     "红绿灯变为红灯"
+    ],
+    [
+     "enter",
+     "off-white building enters at top-left",
+     "米白色建筑从左上进入画面"
+    ]
+   ],
+   [
+    [
+     "exit",
+     "dark gray building exits at top-right",
+     "深灰色建筑从右上离开画面"
+    ]
+   ],
+   [
+    [
+     "hit",
+     "the ego vehicle collides",
+     "自车发生碰撞"
+    ],
+    [
+     "light-green",
+     "the traffic light turns green",
+     "红绿灯变为绿灯"
+    ],
+    [
+     "enter",
+     "black high-rise building enters at top-left",
+     "黑色高层建筑从左上进入画面"
+    ]
+   ],
+   [
+    [
+     "enter",
+     "two reddish-brown buildings enter at top-left and top-left",
+     "两座红棕色建筑从左上进入画面"
+    ]
+   ]
+  ]
+ },
+ {
+  "seg": 8,
+  "t0": 26.708,
+  "t1": 30.042,
+  "f0": 641,
+  "f1": 720,
+  "head_en": [
+   [
+    "t",
+    "Daytime city, cloudy sky. Center: "
+   ],
+   [
+    "t",
+    "player-controlled passenger minivan with a rounded front, sliding side doors and a rear hatch, dominating foreground, "
+   ],
+   [
+    "ego",
+    "~20 km/h, damaged"
+   ],
+   [
+    "t",
+    ". Around: "
+   ],
+   [
+    "dim",
+    "off-white building at top, dark reddish-brown building at top-right, off-white high-rise building at far top-left, black high-rise building at far top, two light gray guardrails, two at far left, modern four-door sedan at left, three four-door pickup trucks, two at left and one at right, green trash can at bottom-right, gray traffic light at left, street lamp at right, gray street lamp at top-left, reddish-brown building at far top-left."
+   ]
+  ],
+  "head_zh": [
+   [
+    "t",
+    "白天的城市，多云。画面中央："
+   ],
+   [
+    "t",
+    "玩家操控的乘用厢式车，圆润车头、侧滑门、后掀尾门，占据前景主体，"
+   ],
+   [
+    "ego",
+    "约 20 km/h，已受损"
+   ],
+   [
+    "t",
+    "。周围："
+   ],
+   [
+    "dim",
+    "米白色建筑（上方）；深红棕色建筑（右上）；米白色高层建筑（远处左上）；黑色高层建筑（远处上方）；两段浅灰色护栏（都在远处左侧）；现代四门轿车（左侧）；三辆四门皮卡（两辆在左侧、一辆在右侧）；绿色垃圾桶（右下）；灰色红绿灯（左侧）；路灯（右侧）；灰色路灯（左上）；红棕色建筑（远处左上）。"
+   ]
+  ],
+  "events": [
+   [
+    [
+     "enter",
+     "off-white high-rise building enters at top-right",
+     "米白色高层建筑从右上进入画面"
+    ]
+   ],
+   [
+    [
+     "light-red",
+     "the traffic light turns red",
+     "红绿灯变为红灯"
+    ],
+    [
+     "enter",
+     "light gray building enters at top-right",
+     "浅灰色建筑从右上进入画面"
+    ],
+    [
+     "enter",
+     "gray sign enters at right",
+     "灰色标牌从右侧进入画面"
+    ]
+   ],
+   [
+    [
+     "light-green",
+     "the traffic light turns green",
+     "红绿灯变为绿灯"
+    ],
+    [
+     "enter",
+     "two dark reddish-brown buildings enter at top-right and top-right",
+     "两座深红棕色建筑从右上进入画面"
+    ],
+    [
+     "enter",
+     "dark gray building enters at top-right",
+     "深灰色建筑从右上进入画面"
+    ]
+   ],
+   [
+    [
+     "light-red",
+     "the traffic light turns red",
+     "红绿灯变为红灯"
+    ]
+   ]
+  ]
+ },
+ {
+  "seg": 9,
+  "t0": 30.042,
+  "t1": 33.375,
+  "f0": 721,
+  "f1": 800,
+  "head_en": [
+   [
+    "t",
+    "Daytime city, cloudy sky. Center: "
+   ],
+   [
+    "t",
+    "player-controlled passenger minivan with a rounded front, sliding side doors and a rear hatch, dominating foreground, "
+   ],
+   [
+    "ego",
+    "~20 km/h, damaged"
+   ],
+   [
+    "t",
+    ". Around: "
+   ],
+   [
+    "dim",
+    "gray construction debris at bottom-right, grayish-brown traditional multi-story building with densely arranged vertical and arched windows, a dark green decorative top cornice, and a dark reddish-brown ground-floor wall at top-right, off-white building at top-left, off-white high-rise building at top-left, four-door pickup truck at bottom-left, street lamp at right, grayish-brown classical multi-story building with light decorative window frames and continuous horizontal moldings between vertical window columns, a dark gray ground-floor storefront, and a wide black top cornice at top-right, boxy five-door suv at bottom-right, light gray building at far top-left, narrow dark gray traditional stone multi-story building with dense rectangular and arched windows, prominent stone columns and top cornice, a thick lower wall, and a wide facade adjoining a narrow side wall at top-right, grayish-brown traditional multi-story building with vertical and arched windows with decorative frames above a dark reddish-brown base facade and clear horizontal divisions at top."
+   ]
+  ],
+  "head_zh": [
+   [
+    "t",
+    "白天的城市，多云。画面中央："
+   ],
+   [
+    "t",
+    "玩家操控的乘用厢式车，圆润车头、侧滑门、后掀尾门，占据前景主体，"
+   ],
+   [
+    "ego",
+    "约 20 km/h，已受损"
+   ],
+   [
+    "t",
+    "。周围："
+   ],
+   [
+    "dim",
+    "灰色建筑废料（右下）；灰褐色传统多层建筑，竖窗和拱窗排列密集，顶部是深绿色装饰檐口，底层是深红棕色墙面（右上）；米白色建筑（左上）；米白色高层建筑（左上）；四门皮卡（左下）；路灯（右侧）；灰褐色古典多层建筑，浅色装饰窗框，竖向窗列之间有连续的横向线脚，底层是深灰色店面，顶部是宽大的黑色檐口（右上）；方正的五门 SUV（右下）；浅灰色建筑（远处左上）；窄长的深灰色传统石砌多层建筑，矩形窗和拱窗密集，石柱和顶部檐口突出，下部墙体厚重，宽立面连着一面窄侧墙（右上）；灰褐色传统多层建筑，深红棕色基座立面之上是带装饰框的竖窗和拱窗，水平分层清晰（上方）。"
+   ]
+  ],
+  "events": [
+   [
+    [
+     "enter",
+     "silver-gray construction debris enters at right",
+     "银灰色建筑废料从右侧进入画面"
+    ]
+   ],
+   [
+    [
+     "hit",
+     "the ego vehicle collides",
+     "自车发生碰撞"
+    ],
+    [
+     "exit",
+     "light gray building exits at top-right",
+     "浅灰色建筑从右上离开画面"
+    ]
+   ],
+   [
+    [
+     "still",
+     "the scene stays largely unchanged",
+     "画面基本不变"
+    ]
+   ],
+   [
+    [
+     "enter",
+     "street lamp enters at left",
+     "路灯从左侧进入画面"
+    ]
+   ]
+  ]
+ },
+ {
+  "seg": 10,
+  "t0": 33.375,
+  "t1": 36.708,
+  "f0": 801,
+  "f1": 880,
+  "head_en": [
+   [
+    "t",
+    "Daytime city, cloudy sky. Center: "
+   ],
+   [
+    "t",
+    "player-controlled passenger minivan with a rounded front, sliding side doors and a rear hatch, dominating foreground, "
+   ],
+   [
+    "ego",
+    "~5 km/h, damaged"
+   ],
+   [
+    "t",
+    ". Around: "
+   ],
+   [
+    "dim",
+    "off-white building at top, four-door pickup truck at bottom-left, light gray high-rise building at far top-left, two street lamps, two at left, gray traffic light at left."
+   ]
+  ],
+  "head_zh": [
+   [
+    "t",
+    "白天的城市，多云。画面中央："
+   ],
+   [
+    "t",
+    "玩家操控的乘用厢式车，圆润车头、侧滑门、后掀尾门，占据前景主体，"
+   ],
+   [
+    "ego",
+    "约 5 km/h，已受损"
+   ],
+   [
+    "t",
+    "。周围："
+   ],
+   [
+    "dim",
+    "米白色建筑（上方）；四门皮卡（左下）；浅灰色高层建筑（远处左上）；两盏路灯（都在左侧）；灰色红绿灯（左侧）。"
+   ]
+  ],
+  "events": [
+   [
+    [
+     "light-red",
+     "the traffic light turns red",
+     "红绿灯变为红灯"
+    ],
+    [
+     "enter",
+     "silver-gray building enters at top-left",
+     "银灰色建筑从左上进入画面"
+    ],
+    [
+     "enter",
+     "dark reddish-brown building enters at top-left",
+     "深红棕色建筑从左上进入画面"
+    ]
+   ],
+   [
+    [
+     "hit",
+     "the ego vehicle collides",
+     "自车发生碰撞"
+    ],
+    [
+     "light-green",
+     "the traffic light turns green",
+     "红绿灯变为绿灯"
+    ],
+    [
+     "enter",
+     "gray construction debris enters at bottom-left",
+     "灰色建筑废料从左下进入画面"
+    ],
+    [
+     "enter",
+     "boxy five-door suv enters at bottom-left",
+     "方正的五门 SUV 从左下进入画面"
+    ]
+   ],
+   [
+    [
+     "still",
+     "the scene stays largely unchanged",
+     "画面基本不变"
+    ]
+   ]
+  ]
+ },
+ {
+  "seg": 11,
+  "t0": 36.708,
+  "t1": 40.042,
+  "f0": 881,
+  "f1": 960,
+  "head_en": [
+   [
+    "t",
+    "Daytime city, cloudy sky. Center: "
+   ],
+   [
+    "t",
+    "player-controlled passenger minivan with a rounded front, sliding side doors and a rear hatch, dominating foreground, "
+   ],
+   [
+    "ego",
+    "~0 km/h, damaged"
+   ],
+   [
+    "t",
+    ". Around: "
+   ],
+   [
+    "dim",
+    "off-white building at top-right, dark reddish-brown building at top-left, silver-gray building at far top, green sign at bottom-left, two street lamps, one at left and one at right, gray construction debris at bottom-left, boxy five-door suv at bottom-left, two gray traffic lights, one at center and one at right, gray sign at left, gray parking meter at bottom."
+   ]
+  ],
+  "head_zh": [
+   [
+    "t",
+    "白天的城市，多云。画面中央："
+   ],
+   [
+    "t",
+    "玩家操控的乘用厢式车，圆润车头、侧滑门、后掀尾门，占据前景主体，"
+   ],
+   [
+    "ego",
+    "约 0 km/h，已受损"
+   ],
+   [
+    "t",
+    "。周围："
+   ],
+   [
+    "dim",
+    "米白色建筑（右上）；深红棕色建筑（左上）；银灰色建筑（远处上方）；绿色标牌（左下）；两盏路灯（左侧、右侧）；灰色建筑废料（左下）；方正的五门 SUV（左下）；两个灰色红绿灯（中间、右侧）；灰色标牌（左侧）；灰色停车计时器（下方）。"
+   ]
+  ],
+  "events": [
+   [
+    [
+     "still",
+     "the scene stays largely unchanged",
+     "画面基本不变"
+    ]
+   ],
+   [
+    [
+     "light-green",
+     "the traffic light turns green",
+     "红绿灯变为绿灯"
+    ]
+   ],
+   [
+    [
+     "light-red",
+     "the traffic light turns red",
+     "红绿灯变为红灯"
+    ]
+   ],
+   [
+    [
+     "light-green",
+     "the traffic light turns green",
+     "红绿灯变为绿灯"
+    ]
+   ]
+  ]
+ }
+]
