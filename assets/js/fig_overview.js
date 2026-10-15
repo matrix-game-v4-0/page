@@ -277,7 +277,7 @@
     dot('d-b3', [[1110, 670], [1145, 670], [1145, 450], [1180, 450]], STATE.accent, [4.4, 5.0]);
 
     // ---------- 生成式渲染 ----------
-    sb = card('dit', 1180, 350, 300, 200, OURS, '因果自回归 DiT', 'Causal DiT', '每块 4 帧 · 2 步去噪', '4 frames/chunk · 2 steps',
+    sb = card('dit', 1180, 350, 300, 200, OURS, '因果自回归 DiT', 'Causal DiT', '每块 4 帧 · 1-2 步去噪', '4 frames/chunk · 1–2 steps',
       { dark: true, win: [[4.95, 6.4]], ring: 'var(--sand)' });
     // DiT 里的块：第 6 块之后多放一格，左移时从右侧裁剪框外滑进来
     s += '<clipPath id="' + P + 'dc"><rect x="1202" y="' + (sb + 16) + '" width="220" height="38"/></clipPath><g clip-path="url(#' + P + 'dc)">';
