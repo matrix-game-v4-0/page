@@ -52,8 +52,6 @@
   .authors { margin-top: 18px; font-size: 15px; color: var(--sub); }
   .btns { margin-top: 26px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
   .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 999px; font-size: 14px; font-weight: 600; text-decoration: none; border: 1px solid var(--slate); color: #fff; background: var(--slate); }
-  .btn.soon { background: #fff; color: var(--sub); border-color: var(--hair); cursor: default; }
-  .btn .tag { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--sand); }
 
   /* 顶部总视频：整幅显示不裁切，默认静音自动播放，可开声音 */
   .teaser { position: relative; margin: 40px auto 0; aspect-ratio: 16 / 9; border-radius: var(--radius); overflow: hidden; background: #000; box-shadow: 0 18px 50px rgba(51,56,61,.14); }
@@ -217,7 +215,7 @@
   <p class="lead"><span lang="en">A game engine keeps the world state and draws a cheap low-poly proxy. A coding agent turns what the player asks for into new rules and prompts. A few-step causal video model turns every chunk into a finished frame on a single consumer GPU.</span><span lang="zh">游戏引擎维护世界状态，画出一份廉价的低模代理画面。玩家想要的新玩法由 Coding Agent 写成新的规则和提示词。少步数的因果视频模型在一张消费级显卡上，把每个块渲染成成品画面。</span></p>
   <div class="authors">Matrix-Game Team</div>
   <div class="btns">
-    <span class="btn soon"><span lang="en">Paper</span><span lang="zh">论文</span> <span class="tag"><span lang="en">soon</span><span lang="zh">即将发布</span></span></span>
+    <a class="btn" href="assets/report/Matrix_Game_4_0.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8M8 9h2"/></svg><span lang="en">Technical Report</span><span lang="zh">技术报告</span></a>
     <a class="btn" href="https://github.com/SkyworkAI/Matrix-Game" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg><span lang="en">Code</span><span lang="zh">代码</span></a>
     <a class="btn" href="https://huggingface.co/Skywork/Matrix-Game-4.0" target="_blank" rel="noopener"><img src="assets/fig/hf_logo.svg" width="19" height="18" alt=""><span lang="en">Hugging Face</span><span lang="zh">Hugging Face 模型</span></a>
   </div>
