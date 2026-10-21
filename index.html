@@ -6,11 +6,11 @@
 <title>Matrix-Game 4.0</title>
 <meta name="description" content="Matrix-Game 4.0: code builds the game, a coding agent handles what rules cannot, and a few-step causal video model renders the world in real time.">
 <script>
-// 先定语言再渲染，避免中英文闪一下：链接里的 ?lang=zh / ?lang=en 优先，其次是记住的选择，最后看浏览器语言
+// 先定语言再渲染，避免中英文闪一下：链接里的 ?lang=zh / ?lang=en 优先，其次是记住的选择，都没有就用英文（用户 10-21 定，不再按浏览器语言选）
 (function () {
   var l = new URLSearchParams(location.search).get('lang');
   if (l !== 'zh' && l !== 'en') { try { l = localStorage.getItem('mg4-lang'); } catch (e) {} }
-  if (l !== 'zh' && l !== 'en') l = /^zh/i.test(navigator.language || '') ? 'zh' : 'en';
+  if (l !== 'zh' && l !== 'en') l = 'en';
   document.documentElement.dataset.lang = l;
   document.documentElement.lang = l === 'zh' ? 'zh-CN' : 'en';
 })();
