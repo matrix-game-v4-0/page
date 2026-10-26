@@ -162,7 +162,7 @@
   .kv .legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--sub); }
   .kv .legend i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
 
-  pre.bib { background: var(--panel); border: 1px solid var(--hair); border-radius: var(--radius); padding: 18px; font: 13px/1.6 var(--mono); color: #4A5056; overflow-x: auto; position: relative; }
+  pre.bib { background: var(--panel); border: 1px solid var(--hair); border-radius: var(--radius); padding: 18px; font: 13px/1.6 var(--mono); color: #4A5056; overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere; position: relative; }
   .copy { position: absolute; top: 12px; right: 12px; border: 1px solid var(--hair); background: #fff; border-radius: 8px; padding: 4px 10px; font: 600 12px var(--font); color: var(--sub); cursor: pointer; }
   footer { padding: 56px 0 40px; text-align: center; font-size: 13px; color: var(--sub); }
 
@@ -192,6 +192,7 @@
     .wrap { padding: 0 16px; }
     .gal { grid-template-columns: 1fr; }
     .compare .knob { width: 36px; height: 36px; font-size: 14px; }
+    pre.bib { padding-top: 48px; }
   }
   @media (prefers-reduced-motion: reduce) {
     * { animation: none !important; transition: none !important; }
@@ -315,15 +316,14 @@
 
 <section id="bibtex"><div class="wrap reveal">
   <h2><span class="k"><span lang="en">CITE</span><span lang="zh">引用</span></span>BibTeX</h2>
-  <pre class="bib" id="bib"><button class="copy" id="copy"><span lang="en">Copy</span><span lang="zh">复制</span></button>@misc{zhang2026matrixgame4,
-  title        = {Matrix-Game 4.0: Harnessing Video Models for Real-Time Playable Game Worlds},
-  author       = {Zhang, Jihai and Qian, Runjia and Kong, Kaiqin and Jiang, Biao and
-                  Wang, Puyi and Chen, Siru and Li, Tianle and Chen, Guanjie and Wu, Junyi and
-                  Chen, Chubin and Li, Yuanhang and Huang, Kaichen and Zhang, Haobo and
-                  Li, Yangguang and Yu, Wei and Chen, Guibin and Cheng, Yu and Zhou, Yahui},
-  howpublished = {Technical report},
-  year         = {2026},
-  url          = {https://matrix-game-v4-0.github.io/page/}
+  <pre class="bib" id="bib"><button class="copy" id="copy"><span lang="en">Copy</span><span lang="zh">复制</span></button>@misc{zhang2026matrixgame40harnessingvideo,
+      title={Matrix-Game 4.0: Harnessing Video Models for Real-Time Playable Game Worlds},
+      author={Jihai Zhang and Runjia Qian and Kaiqin Kong and Biao Jiang and Puyi Wang and Siru Chen and Tianle Li and Guanjie Chen and Junyi Wu and Chubin Chen and Yuanhang Li and Kaichen Huang and Haobo Zhang and Yangguang Li and Wei Yu and Guibin Chen and Yu Cheng and Yahui Zhou},
+      year={2026},
+      eprint={2610.27999},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2610.27999},
 }</pre>
 </div></section>
 
